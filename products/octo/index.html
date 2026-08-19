@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>octo — a runtime for embodied agents · Lamantin AI</title>
+    <meta name="description" content="An event-driven runtime for embodied, always-on agents — the environment an agent lives in, not the agent itself." />
+    <link rel="icon" href="../../assets/icon-32.png?v=7" sizes="32x32" />
+    <link rel="icon" href="../../assets/icon-16.png?v=7" sizes="16x16" />
+    <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png?v=7" />
+    <link rel="stylesheet" href="../../assets/fonts.css?v=7" />
+    <link rel="stylesheet" href="../../styles.css?v=7" />
+    <meta property="og:title" content="octo — a runtime for embodied agents · Lamantin AI" />
+    <meta property="og:description" content="An event-driven runtime for embodied, always-on agents — the environment an agent lives in, not the agent itself." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body data-tier="infra">
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="masthead">
+      <div class="wrap row">
+        <a class="back" href="../../">
+          <span class="arrow" aria-hidden="true">←</span>
+          <img src="../../assets/mark-petrol.png" alt="" width="608" height="220" />
+          <b>Lamantin AI</b>
+        </a>
+        <nav aria-label="Sections">
+          <a href="../../#products">All products</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="p-hero wrap">
+        <span class="p-tier label">Tier 02 · Infrastructure</span>
+        <div class="p-name">
+          <h1>octo</h1>
+          <span class="p-glyph" aria-hidden="true">🐙</span>
+        </div>
+        <p class="lede">An event-driven runtime for embodied, always-on agents.</p>
+        <p class="p-meta">
+          <span class="stars" data-stars="octo"><span class="n">★ 3</span><span class="sep">·</span></span>Rust<span class="sep">·</span>MIT
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/LamantinAI/octo" rel="noopener">View the source</a>
+        </div>
+      </div>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>Not a brain — the environment a brain lives in.</h2>
+            <p>A distributed nervous system inspired by the octopus: many autonomous <i>tentacles</i> sensing and acting on the world, a core that routes events, fast reflexes, and cognition only when it is actually needed.</p>
+            <p>octo is not an agent. It owns the part that LLM SDKs, graph frameworks, and tool protocols leave to you — living in time, reacting to the world, and staying up while nobody is asking anything.</p>
+          </div>
+          <ul class="facts">
+            <li>
+              <b>The envelope</b>
+              <span>One fixed-shape header carrying an opaque payload. The bus routes by header fields; kinds are dot-namespaced with glob matching, so a handler can take <code>vision.**</code> or one exact topic.</span>
+            </li>
+            <li>
+              <b>Reflex before cognition</b>
+              <span>A deterministic router handles the majority of events with no model in the loop, and escalates to cognition only for ambiguity.</span>
+            </li>
+            <li>
+              <b>Connectors are the action space</b>
+              <span>A connector both senses and acts, so adding one gives the agent a new capability with zero change to cognition.</span>
+            </li>
+            <li>
+              <b>Sometimes no code at all</b>
+              <span>A generic HTTP connector builds a whole multi-route integration from a manifest.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>The shape of a turn.</h2>
+            <p>Every event takes the same path, and most of them never reach a model.</p>
+          </div>
+          <div class="code-win" style="--cols: 44">
+            <div class="code-bar">
+              <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="code-title">the loop</span>
+            </div>
+            <pre class="code">event in
+  → normalize
+  → reflex          <span class="c">// deterministic, no LLM</span>
+      ↳ escalate to cognition  <span class="c">// if unsure</span>
+  → action(s) out
+  → memory</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <img class="watermark" src="../../assets/mark-parchment.png" alt="" width="608" height="220" />
+      <div class="wrap">
+        <h2>Everything we can open, we open.</h2>
+        <div class="contact">
+          <a class="mail" href="mailto:lamantin.research@gmail.com">lamantin.research@gmail.com</a>
+        </div>
+        <div class="rule">
+          <div class="links">
+            <a href="../../">Lamantin AI</a>
+            <a href="../../manifesto/">Manifesto</a>
+            <a href="https://github.com/LamantinAI" rel="noopener">GitHub</a>
+            <a href="https://github.com/LamantinAI/brandbook" rel="noopener">Brand book</a>
+          </div>
+          <small>Lamantin AI · Rust · Python · Edge AI</small>
+        </div>
+      </div>
+    </footer>
+    <script src="../../assets/stars.js?v=7" type="module"></script>
+  </body>
+</html>

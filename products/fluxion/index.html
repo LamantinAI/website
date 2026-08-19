@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>fluxion — a neuromorphic streaming SDK · Lamantin AI</title>
+    <meta name="description" content="A cross-hardware SDK for structured media AI — GStreamer plugins and an SDK foundation that keep one pipeline graph stable while runtimes and hardware change underneath." />
+    <link rel="icon" href="../../assets/icon-32.png?v=7" sizes="32x32" />
+    <link rel="icon" href="../../assets/icon-16.png?v=7" sizes="16x16" />
+    <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png?v=7" />
+    <link rel="stylesheet" href="../../assets/fonts.css?v=7" />
+    <link rel="stylesheet" href="../../styles.css?v=7" />
+    <meta property="og:title" content="fluxion — a neuromorphic streaming SDK · Lamantin AI" />
+    <meta property="og:description" content="A cross-hardware SDK for structured media AI — GStreamer plugins and an SDK foundation that keep one pipeline graph stable while runtimes and hardware change underneath." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body data-tier="infra">
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="masthead">
+      <div class="wrap row">
+        <a class="back" href="../../">
+          <span class="arrow" aria-hidden="true">←</span>
+          <img src="../../assets/mark-petrol.png" alt="" width="608" height="220" />
+          <b>Lamantin AI</b>
+        </a>
+        <nav aria-label="Sections">
+          <a href="../../#products">All products</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="p-hero wrap">
+        <span class="p-tier label">Tier 02 · Infrastructure</span>
+        <div class="p-name">
+          <h1>fluxion</h1>
+        </div>
+        <p class="lede">A cross-hardware SDK for making sense of media streams.</p>
+        <p class="p-meta">
+          Rust<span class="sep">·</span>not yet public
+        </p>
+        <div class="actions">
+          <span class="btn btn-quiet is-note">Not open yet — the substrate ships as it hardens</span>
+        </div>
+      </div>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>One pipeline graph, swappable hardware underneath.</h2>
+            <p>Not a monolithic runtime: a set of GStreamer plugins on an SDK foundation, from which real pipelines get assembled. The idea it is built around is that an application's pipeline graph should stay stable while the runtimes and the silicon underneath it change — one pipeline contract with replaceable intelligent elements, rather than a universal model server.</p>
+            <p>Three layers. <code>flxcore</code> carries metadata, logging, inference contracts and the backend libraries; <code>flxgst</code> exposes those capabilities as plugins inside a streaming graph; <code>flxpython</code> binds the metadata for Python around native classes rather than raw GObject wrappers.</p>
+            <p>It is deliberately not an orchestrator for every AI workflow, and not a collection of speculative backends before the pipeline primitives are finished.</p>
+          </div>
+          <ul class="facts">
+            <li>
+              <b>Inference</b>
+              <span>Detection, pose estimation and instance segmentation on YOLOv8, over ONNX Runtime on CPU or Rockchip RKNN on an RK3588 NPU — with the backend chosen at compile time.</span>
+            </li>
+            <li>
+              <b>Tracking</b>
+              <span>Online tracking with stable per-object ids, on <code>jamtrack-rs</code> and ByteTrack.</span>
+            </li>
+            <li>
+              <b>Metadata that survives the graph</b>
+              <span>Primitives for frames and detections that propagate across muxing, inference, tracking and rendering instead of being rebuilt at each step.</span>
+            </li>
+            <li>
+              <b>Measured, not projected</b>
+              <span>Four parallel YOLOv8 streams with tracking and overlay at 18 fps on an RK3588.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>Eyes that already think.</h2>
+            <p>Fluxion is meant to be one of the sensory sources feeding <a href="../octo/">octo</a>: its connector emits high-level scene events rather than frames, and octo's reflex layer answers them deterministically or escalates to cognition.</p>
+          </div>
+          <div class="code-win" style="--cols: 46">
+            <div class="code-bar">
+              <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="code-title">the graph</span>
+            </div>
+            <pre class="code">camera → flxgst pipeline
+    ├ flxneuro   <span class="c">// detection · pose · segment</span>
+    ├ flxtracker <span class="c">// stable ids</span>
+    └ flxdraw    <span class="c">// overlay</span>
+         ↓
+    <span class="c">scene events</span> → octo</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <img class="watermark" src="../../assets/mark-parchment.png" alt="" width="608" height="220" />
+      <div class="wrap">
+        <h2>Everything we can open, we open.</h2>
+        <div class="contact">
+          <a class="mail" href="mailto:lamantin.research@gmail.com">lamantin.research@gmail.com</a>
+        </div>
+        <div class="rule">
+          <div class="links">
+            <a href="../../">Lamantin AI</a>
+            <a href="../../manifesto/">Manifesto</a>
+            <a href="https://github.com/LamantinAI" rel="noopener">GitHub</a>
+            <a href="https://github.com/LamantinAI/brandbook" rel="noopener">Brand book</a>
+          </div>
+          <small>Lamantin AI · Rust · Python · Edge AI</small>
+        </div>
+      </div>
+    </footer>
+    <script src="../../assets/stars.js?v=7" type="module"></script>
+  </body>
+</html>

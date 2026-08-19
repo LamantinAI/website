@@ -1,0 +1,466 @@
+/* Lamantin AI — the face of the organization.
+ *
+ * The brand book is explicit about which temperature this page is: the face
+ * stays calm — petrol on paper — while the *work* (graphs, visualizations)
+ * goes near-black and vermillion. So this is a warm, quiet page with one
+ * dark panel at the end, which the book sanctions for "heroes, footers, and
+ * focus".
+ *
+ * Tier accents appear on product cards only: vermillion for infrastructure,
+ * ochre for intelligence, petrol for anything that speaks for the whole.
+ * Gold is a hairline and an eyebrow here, never body text — on paper it
+ * measures ~2.3:1 and would fail every reading pair.
+ */
+
+:root {
+  /* foundation */
+  --paper: #fcfbf8;
+  --sand: #eee9d8;
+  --ground: #2a2a2f;
+  --ink-black: #17171b;
+  --parchment: #ece8df;
+
+  /* text & hairlines */
+  --ink: #23201b;
+  --ink-2: #544d42;
+  --muted: #6e6557;
+  --faint: #a99e8c;
+  --line: rgba(35, 32, 27, 0.13);
+  --line-2: rgba(35, 32, 27, 0.06);
+
+  /* accents — identity, seal, gilt */
+  --petrol: #2f7d6b;
+  --petrol-deep: #1f5b4d;
+  --seal: #c8402e;
+  --gold: #caa24a;
+  /* ochre is unreadable as text on paper; this is the tier's *label* colour,
+     the same hue carried down to a legible lightness */
+  --gold-ink: #7a5c14;
+
+  --serif: "Spectral", Georgia, "Times New Roman", serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* one spacing step, doubled between groups */
+  --gap: 16px;
+  --section: clamp(44px, 5vw, 72px);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+/* An explicit `display` beats the user-agent rule for [hidden], so anything
+   we lay out with flex would keep rendering after being hidden. */
+[hidden] { display: none !important; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Nav links glide instead of teleporting, so you can see where you landed.
+     The reduced-motion block at the bottom turns this back off — that is the
+     whole reason it is CSS and not a script. */
+  scroll-behavior: smooth;
+}
+/* an anchored section should not sit flush against the top edge */
+section[id], [id]:target { scroll-margin-top: 28px; }
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--serif);
+  font-size: 19px;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+img { max-width: 100%; height: auto; }
+
+.wrap { width: 100%; max-width: 1120px; margin-inline: auto; padding-inline: clamp(20px, 5vw, 40px); }
+.prose { max-width: 62ch; }
+
+/* ── type ─────────────────────────────────────────────────────────────── */
+h1, h2, h3 { margin: 0; font-weight: 600; letter-spacing: -0.015em; text-wrap: balance; }
+h1 { font-size: clamp(44px, 7vw, 64px); line-height: 1.04; }
+h2 { font-size: clamp(32px, 4.4vw, 44px); line-height: 1.12; }
+h3 { font-size: 24px; line-height: 1.25; }
+p { margin: 0; text-wrap: pretty; }
+.lede { font-size: clamp(21px, 2.2vw, 26px); line-height: 1.45; color: var(--ink-2); font-weight: 300; }
+
+.label {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+a { color: inherit; }
+
+/* Inline code had no rule at all, so it fell back to the browser's generic
+   monospace at the surrounding size — the wrong face, and mono at an equal
+   px size always reads larger than a serif beside it. */
+code {
+  font-family: var(--mono);
+  font-size: 0.86em;
+  background: var(--sand);
+  border: 1px solid var(--line-2);
+  border-radius: 3px;
+  padding: 0.1em 0.35em;
+}
+pre.code code { font: inherit; background: none; border: 0; padding: 0; }
+:focus-visible { outline: 2px solid var(--petrol); outline-offset: 3px; border-radius: 4px; }
+
+.skip {
+  position: absolute; left: 50%; top: 12px; z-index: 20;
+  transform: translate(-50%, -200%);
+  background: var(--paper); border: 1px solid var(--line);
+  border-radius: 8px; padding: 10px 18px;
+  font-family: var(--mono); font-size: 13px; text-decoration: none;
+}
+.skip:focus { transform: translate(-50%, 0); }
+
+/* ── masthead ─────────────────────────────────────────────────────────── */
+.masthead { padding-block: 20px; border-bottom: 1px solid var(--line-2); }
+.masthead .row { display: flex; align-items: center; flex-wrap: wrap; gap: 12px var(--gap); }
+.brand { display: inline-flex; align-items: center; gap: 12px; text-decoration: none; }
+.brand img { width: 52px; height: auto; }
+.brand b { font-weight: 600; font-size: 20px; letter-spacing: -0.01em; }
+.masthead nav { margin-inline-start: auto; display: flex; flex-wrap: wrap; gap: 10px 22px; }
+/* below this the nav takes its own line rather than distending the page —
+   at 320px it was forcing a 410px document and a horizontal scrollbar */
+@media (max-width: 560px) { .masthead nav { margin-inline-start: 0; width: 100%; } }
+.masthead nav a {
+  font-family: var(--mono); font-size: 13px; color: var(--ink-2);
+  text-decoration: none; padding-block: 4px;
+  border-bottom: 1px solid transparent; transition: color .15s, border-color .15s;
+}
+.masthead nav a:hover { color: var(--petrol-deep); border-bottom-color: var(--petrol); }
+
+/* ── hero ─────────────────────────────────────────────────────────────── */
+.hero { padding-block: clamp(36px, 4.5vw, 60px) var(--section); }
+.pillars { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-bottom: 28px; }
+.pillars span { display: inline-flex; align-items: center; gap: 10px; }
+.pillars span::before {
+  content: ""; width: 5px; height: 5px; border-radius: 50%;
+  background: var(--petrol); flex: none;
+}
+.hero h1 { margin-bottom: 22px; }
+.hero .lede { max-width: 30ch; }
+.hero .say { margin-top: 22px; max-width: 58ch; color: var(--ink-2); }
+
+.actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 26px; }
+.btn {
+  display: inline-flex; align-items: center; gap: 9px;
+  font-family: var(--mono); font-size: 13.5px; letter-spacing: 0.02em;
+  text-decoration: none; padding: 13px 22px; border-radius: 10px;
+  border: 1px solid transparent; white-space: nowrap;
+  transition: background-color .15s, border-color .15s, color .15s;
+}
+.btn-primary { background: var(--petrol); color: #fff; }
+.btn-primary:hover { background: var(--petrol-deep); }
+.btn-quiet { border-color: var(--line); color: var(--ink); }
+.btn-quiet:hover { background: var(--sand); border-color: rgba(35, 32, 27, 0.2); }
+
+/* ── sections ─────────────────────────────────────────────────────────── */
+section { padding-block: var(--section); border-top: 1px solid var(--line-2); }
+.head { margin-bottom: 30px; }
+.head .label { display: block; margin-bottom: 14px; }
+.head p { margin-top: 18px; color: var(--ink-2); }
+
+/* the stack, as the brand book's quiet tags — a floor under a short section */
+.stack { list-style: none; display: flex; flex-wrap: wrap; gap: 10px; margin: 26px 0 0; padding: 0; }
+.stack li {
+  font-family: var(--mono); font-size: 12.5px; color: var(--ink-2);
+  border: 1px solid var(--line); border-radius: 999px; padding: 7px 15px;
+  background: var(--paper);
+}
+
+/* ── products ─────────────────────────────────────────────────────────── */
+.tier { margin-top: 38px; }
+.tier:first-of-type { margin-top: 0; }
+/* The label sits above the name, the way every other section on this page
+   does it. On one line it was a 12px mono label, a 21px serif heading and a
+   17px italic all fighting for the same baseline, with a 3px rule centred in
+   the shortest box of the three. */
+.tier-head { margin-bottom: 20px; }
+.tier-head .key { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 10px; }
+.tier-head .key::before { content: ""; width: 22px; height: 3px; border-radius: 2px; flex: none; }
+.tier-name { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
+.tier-head h3 { font-size: 21px; }
+.tier-head .job { font-style: italic; color: var(--muted); font-size: 17px; }
+.tier-infra .key::before { background: var(--seal); }
+.tier-mind .key::before { background: var(--gold); }
+.tier-infra .key { color: var(--seal); }
+.tier-mind .key { color: var(--gold-ink); }
+
+.cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: var(--gap); }
+.card {
+  display: flex; flex-direction: column; gap: 10px;
+  padding: 22px 22px 18px; border-radius: 14px;
+  background: var(--paper); border: 1px solid var(--line);
+  border-top: 3px solid var(--line); text-decoration: none;
+  box-shadow: 0 1px 2px rgba(35, 32, 27, 0.04);
+  transition: border-color .15s, box-shadow .15s, transform .15s;
+}
+.tier-infra .card { border-top-color: var(--seal); }
+.tier-mind .card { border-top-color: var(--gold); }
+.card:hover {
+  transform: translateY(-2px);
+  border-color: rgba(35, 32, 27, 0.22);
+  box-shadow: 0 10px 24px -12px rgba(35, 32, 27, 0.28);
+}
+.card h4 {
+  margin: 0; font-family: var(--mono); font-size: 16px; font-weight: 500;
+  letter-spacing: -0.01em; color: var(--ink);
+}
+.card p { color: var(--ink-2); font-size: 16.5px; line-height: 1.5; flex: 1; }
+.card .meta {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 6px 12px;
+  font-family: var(--mono); font-size: 12px; color: var(--muted);
+  padding-top: 12px; border-top: 1px solid var(--line-2);
+}
+/* the wrapper holds the count and its own separator, so it needs the same
+   gap the meta row uses — otherwise the dot sits flush against the number */
+.card .meta .stars, .p-meta .stars {
+  display: inline-flex; align-items: baseline; gap: 12px;
+  font-variant-numeric: tabular-nums;
+}
+.card .meta .sep { color: var(--faint); }
+
+/* ── foundations ──────────────────────────────────────────────────────── */
+.foundations { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(280px, 100%), 1fr)); gap: 28px var(--gap); }
+.foundation .n { font-family: var(--mono); font-size: 12px; color: var(--petrol); letter-spacing: 0.16em; }
+.foundation h3 { margin: 10px 0 10px; font-size: 22px; }
+.foundation p { color: var(--ink-2); font-size: 17.5px; line-height: 1.55; }
+
+/* ── openness ─────────────────────────────────────────────────────────── */
+.openness { display: grid; grid-template-columns: 1.2fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+@media (max-width: 820px) { .openness { grid-template-columns: 1fr; } }
+.publishes { list-style: none; margin: 0; padding: 0; }
+.publishes li {
+  display: flex; gap: 12px; padding-block: 11px;
+  border-bottom: 1px solid var(--line-2);
+  font-family: var(--mono); font-size: 14px; color: var(--ink-2);
+}
+.publishes li::before { content: "·"; color: var(--petrol); font-weight: 700; }
+.publishes li:last-child { border-bottom: 0; }
+.aside-note { font-style: italic; color: var(--muted); margin-top: 20px; }
+
+/* ── footer: the one dark panel ───────────────────────────────────────── */
+footer {
+  position: relative; overflow: hidden;
+  background: var(--ink-black); color: var(--parchment);
+  padding-block: clamp(48px, 5.5vw, 76px);
+}
+footer .watermark {
+  position: absolute; right: -60px; bottom: -40px; width: min(560px, 62vw);
+  opacity: 0.05; pointer-events: none; user-select: none;
+}
+footer .wrap { position: relative; z-index: 1; }
+footer h2 { font-size: clamp(28px, 3.6vw, 40px); max-width: 20ch; }
+footer .contact { margin-top: 28px; display: flex; flex-wrap: wrap; gap: 12px 32px; align-items: baseline; }
+footer a { color: var(--parchment); }
+footer .mail {
+  font-family: var(--mono); font-size: 16px; text-decoration: none;
+  border-bottom: 1px solid rgba(236, 232, 223, 0.35); padding-bottom: 2px;
+  transition: border-color .15s;
+}
+footer .mail:hover { border-bottom-color: var(--parchment); }
+footer .links { display: flex; flex-wrap: wrap; gap: 24px; }
+footer .links a { font-family: var(--mono); font-size: 13.5px; color: #cfc9bd; text-decoration: none;
+  border-bottom: 1px solid transparent; padding-bottom: 2px; transition: color .15s, border-color .15s; }
+footer .links a:hover { color: var(--parchment); border-bottom-color: rgba(236, 232, 223, 0.4); }
+footer .rule { margin-top: 34px; padding-top: 22px; border-top: 1px solid rgba(236, 232, 223, 0.14);
+  display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; }
+footer .rule small { font-family: var(--mono); font-size: 12px; color: #a49d90; letter-spacing: 0.04em; }
+footer :focus-visible { outline-color: var(--parchment); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important; animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important; scroll-behavior: auto !important;
+  }
+}
+
+/* ── product page ─────────────────────────────────────────────────────────
+ * A product page is still "the face" — it speaks *about* the product, it is
+ * not the product's own interface — so it stays on paper. Only the tier
+ * accent changes, driven by one variable set on <body>.
+ */
+body[data-tier="infra"] { --tier: var(--seal); --tier-ink: #a8331f; }
+body[data-tier="mind"]  { --tier: var(--gold); --tier-ink: var(--gold-ink); }
+
+/* padding-block, not a taller font: the target has to clear 24px even though
+   the label is 13px type */
+/* The masthead must not change between the index and a product page — the
+   mark was 52px on one and 30px on the other, so it jumped on every
+   navigation. It is one component now; only the arrow is added. */
+.back { display: inline-flex; align-items: center; gap: 12px; text-decoration: none;
+  color: var(--ink); }
+.back .arrow { font-family: var(--mono); font-size: 15px; color: var(--muted);
+  transition: color .15s, transform .15s; }
+.back img { width: 52px; height: auto; }
+.back b { font-weight: 600; font-size: 20px; letter-spacing: -0.01em; }
+.back:hover .arrow { color: var(--petrol-deep); transform: translateX(-2px); }
+
+.p-hero { padding-block: clamp(32px, 4vw, 52px) var(--section); }
+.p-tier { display: inline-flex; align-items: center; gap: 9px; color: var(--tier-ink); margin-bottom: 22px; }
+.p-tier::before { content: ""; width: 22px; height: 3px; border-radius: 2px; background: var(--tier); flex: none; }
+.p-name { display: flex; align-items: baseline; flex-wrap: wrap; gap: 16px; }
+.p-hero h1 { font-family: var(--mono); font-weight: 500; font-size: clamp(38px, 6vw, 58px); letter-spacing: -0.02em; }
+.p-glyph { font-size: clamp(30px, 4vw, 44px); color: var(--tier); line-height: 1; }
+.p-hero .lede { margin-top: 20px; max-width: 46ch; }
+.p-meta { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px; margin-top: 26px;
+  font-family: var(--mono); font-size: 13px; color: var(--muted); }
+.p-meta .sep { color: var(--faint); }
+
+.p-body { display: grid; grid-template-columns: 1.15fr 1fr; gap: clamp(32px, 5vw, 72px); align-items: start; }
+@media (max-width: 860px) { .p-body { grid-template-columns: 1fr; } }
+.p-body p + p { margin-top: 18px; }
+.p-body .prose p { color: var(--ink-2); }
+
+.facts { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--line); }
+.facts li { padding-block: 16px; border-bottom: 1px solid var(--line-2); }
+.facts b { display: block; font-family: var(--mono); font-size: 12px; font-weight: 500;
+  letter-spacing: 0.14em; text-transform: uppercase; color: var(--tier-ink); margin-bottom: 6px; }
+.facts span { color: var(--ink-2); font-size: 17px; line-height: 1.5; }
+
+/* ── the code window ──────────────────────────────────────────────────────
+ * A code sample that scrolls sideways is a sample with its end hidden: you
+ * cannot see there is more without discovering the scrollbar first. So the
+ * type is sized to the sample instead. `--cols` is the longest line, counted
+ * at build time, and the panel is its own container — 100cqw is the width it
+ * actually got in the grid, so the sum below is "fit these many characters,
+ * but never grow past 13.5px". IBM Plex Mono advances exactly 0.6em per
+ * character, which is what makes the arithmetic exact rather than a guess.
+ * The padding is subtracted through --pad so the sum cannot drift out of
+ * step with the padding it is meant to be accounting for.
+ */
+.code-win { --pad: 22px;
+  border-radius: 12px; overflow: hidden; background: var(--ink-black);
+  container-type: inline-size; }
+
+.code-bar { display: flex; align-items: center; gap: 10px; padding: 11px 14px;
+  border-bottom: 1px solid rgba(236, 232, 223, 0.10); }
+/* the brand's three accents, which already sit at traffic-light hues */
+.lights { display: inline-flex; gap: 7px; flex: none; }
+.lights i { width: 11px; height: 11px; border-radius: 50%; }
+.lights i:nth-child(1) { background: var(--seal); }
+.lights i:nth-child(2) { background: var(--gold); }
+.lights i:nth-child(3) { background: var(--petrol); }
+/* centred over the panel, so the end margin has to match the lights' width */
+.code-title { flex: 1; text-align: center; margin-inline-end: 47px;
+  font-family: var(--mono); font-size: 12px; color: #8f8a80; letter-spacing: 0.03em;
+  overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+pre.code { margin: 0; padding: 18px var(--pad) 20px; overflow-x: auto;
+  color: var(--parchment); font-family: var(--mono); line-height: 1.75;
+  font-size: clamp(10.5px, calc((100cqw - var(--pad) * 2) / var(--cols) / 0.6), 13.5px); }
+pre.code .c { color: #9b978c; }
+
+/* On a phone the column is the screen, and the screen is narrower than the
+   samples. Letting the panel run to both edges buys back the page gutter —
+   enough that the type lands above the floor instead of on it. */
+@media (max-width: 600px) {
+  .code-win { --pad: 16px; margin-inline: calc(-1 * clamp(20px, 5vw, 40px)); border-radius: 0; }
+}
+
+.also { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 20px; }
+.also a { font-family: var(--mono); font-size: 13px; text-decoration: none; color: var(--ink);
+  border: 1px solid var(--line); border-radius: 999px; padding: 8px 16px; transition: background .15s, border-color .15s; }
+.also a:hover { background: var(--sand); border-color: rgba(35,32,27,.2); }
+
+/* ── product imagery ──────────────────────────────────────────────────────
+ * The outline is pure black at low alpha, not the page's warm --line: a
+ * tinted hairline picks up the paper underneath and reads as dirt along the
+ * edge of a photograph.
+ */
+.shot { margin: 0 0 var(--section); }
+.shot .frame { position: relative; border-radius: 12px; overflow: hidden;
+  outline: 1px solid rgba(0, 0, 0, 0.1); outline-offset: -1px; background: var(--ink-black); }
+.shot img, .shot video { display: block; width: 100%; height: auto; }
+.shot figcaption { margin-top: 14px; font-family: var(--mono); font-size: 12px;
+  line-height: 1.6; color: var(--muted); max-width: 68ch; }
+.shot.portrait { max-width: 340px; }
+.shot.portrait .frame { border-radius: 999px; }
+
+.shot-toggle {
+  position: absolute; right: 12px; bottom: 12px; z-index: 2;
+  display: inline-flex; align-items: center; gap: 8px;
+  font-family: var(--mono); font-size: 12px; color: var(--parchment);
+  background: rgba(23, 23, 27, 0.72); backdrop-filter: blur(6px);
+  border: 1px solid rgba(236, 232, 223, 0.28); border-radius: 999px;
+  padding: 8px 15px; cursor: pointer; transition: background .15s, border-color .15s;
+}
+.shot-toggle:hover { background: rgba(23, 23, 27, 0.88); border-color: rgba(236, 232, 223, 0.5); }
+.shot-toggle:focus-visible { outline: 2px solid var(--parchment); outline-offset: 2px; }
+
+/* ── a set of stills, not a carousel ──────────────────────────────────────
+ * Three shots shown together rather than one at a time. A carousel would
+ * hide two of the three behind interaction, and hidden content with no cue
+ * may as well not exist — these are the point of the page, not decoration.
+ */
+.shots { display: grid; gap: 26px; margin: 0 0 var(--section); }
+.shots figure { margin: 0; }
+.shots .frame { border-radius: 12px; overflow: hidden;
+  outline: 1px solid rgba(0, 0, 0, 0.1); outline-offset: -1px; background: var(--ink-black); }
+.shots img { display: block; width: 100%; height: auto; }
+.shots figcaption { margin-top: 12px; font-family: var(--mono); font-size: 12px;
+  line-height: 1.6; color: var(--muted); max-width: 72ch; }
+.shots figcaption b { font-weight: 500; color: var(--ink-2); }
+@media (min-width: 900px) {
+  /* the galaxy is the wide one; the two rooms sit side by side beneath it */
+  .shots { grid-template-columns: 1fr 1fr; }
+  .shots figure:first-child { grid-column: 1 / -1; }
+}
+
+/* A product that has no public repository yet: the slot where the source
+   button goes says so plainly instead of linking somewhere that 404s. */
+/* nowrap suits a button, whose label is two words; this one is a sentence,
+   and it was pushing a 430px page 39px wider than the screen */
+.btn.is-note { cursor: default; color: var(--ink-2); border-style: dashed;
+  white-space: normal; }
+.btn.is-note:hover { background: transparent; }
+
+/* ── the manifesto ────────────────────────────────────────────────────────
+ * A document page, so it drops the grid the rest of the site is built on:
+ * one column at reading measure, and nothing sitting beside it competing for
+ * the eye. The section rule elsewhere puts a hairline and a full section's
+ * padding above every <section>; inside a document that would break the text
+ * into slabs, so it is turned off here and replaced with plain space.
+ */
+.doc-hero { padding-block: clamp(36px, 4.5vw, 56px) clamp(22px, 2.6vw, 30px); }
+.doc-hero .label { display: block; margin-bottom: 14px; }
+/* The text sits at reading measure, which leaves the right of the page empty.
+   A rule across the full column width turns that emptiness into a masthead
+   for the document rather than a layout that ran out of content. */
+.doc-hero .rule { margin-top: clamp(22px, 2.6vw, 30px); border-top: 1px solid var(--line); }
+
+.doc { padding-bottom: var(--section); }
+.doc section { padding-block: 0; border-top: 0; margin-top: clamp(38px, 5vw, 58px); }
+.doc h2 { font-size: clamp(25px, 2.8vw, 31px); margin-bottom: 18px; }
+.doc p { color: var(--ink-2); }
+.doc p + p { margin-top: 18px; }
+.doc b { font-weight: 600; color: var(--ink); }
+/* the first paragraph carries the whole thesis — it gets the extra size */
+.doc .opening { font-size: 21px; line-height: 1.55; color: var(--ink); }
+.doc .doc-lede { font-size: 19.5px; color: var(--ink); }
+
+/* the four foundations, numbered the way the index numbers them */
+.tenets { list-style: none; margin: 22px 0 0; padding: 0; counter-reset: tenet; }
+.tenets li {
+  counter-increment: tenet; padding-block: 18px;
+  border-top: 1px solid var(--line-2); color: var(--ink-2); line-height: 1.55;
+}
+.tenets li:last-child { border-bottom: 1px solid var(--line-2); }
+.tenets li::before {
+  content: "0" counter(tenet); display: block; margin-bottom: 7px;
+  font-family: var(--mono); font-size: 12px; color: var(--petrol); letter-spacing: 0.16em;
+}
+
+/* why the document is under version control, and where to check */
+.doc .colophon { margin-top: clamp(38px, 5vw, 58px); padding-top: 24px;
+  border-top: 1px solid var(--line); font-style: italic; color: var(--muted); }
+.doc .also { margin-top: 20px; }
+
+/* the index's ethics section points at the whole thing */
+.after { margin-top: 30px; }
+.after a { font-family: var(--mono); font-size: 13.5px; color: var(--petrol-deep);
+  text-decoration: none; border-bottom: 1px solid var(--line); padding-bottom: 3px; }
+.after a:hover { border-bottom-color: var(--petrol); }

@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>kaeru — cognitive memory for LLM agents · Lamantin AI</title>
+    <meta name="description" content="A typed, bi-temporal graph that agents think in — local-first for each agent, with an optional shared cloud tier for a team." />
+    <link rel="icon" href="../../assets/icon-32.png?v=7" sizes="32x32" />
+    <link rel="icon" href="../../assets/icon-16.png?v=7" sizes="16x16" />
+    <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png?v=7" />
+    <link rel="stylesheet" href="../../assets/fonts.css?v=7" />
+    <link rel="stylesheet" href="../../styles.css?v=7" />
+    <meta property="og:title" content="kaeru — cognitive memory for LLM agents · Lamantin AI" />
+    <meta property="og:description" content="A typed, bi-temporal graph that agents think in — local-first for each agent, with an optional shared cloud tier for a team." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body data-tier="infra">
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="masthead">
+      <div class="wrap row">
+        <a class="back" href="../../">
+          <span class="arrow" aria-hidden="true">←</span>
+          <img src="../../assets/mark-petrol.png" alt="" width="608" height="220" />
+          <b>Lamantin AI</b>
+        </a>
+        <nav aria-label="Sections">
+          <a href="../../#products">All products</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="p-hero wrap">
+        <span class="p-tier label">Tier 02 · Infrastructure</span>
+        <div class="p-name">
+          <h1>kaeru</h1>
+          <span class="p-glyph" aria-hidden="true">蛙</span>
+        </div>
+        <p class="lede">Cognitive memory for LLM agents — local-first, and shareable across a team through the cloud.</p>
+        <p class="p-meta">
+          <span class="stars" data-stars="kaeru"><span class="n">★ 24</span><span class="sep">·</span></span>Rust<span class="sep">·</span>MIT<span class="sep">·</span>pre-1.0 alpha
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/LamantinAI/kaeru" rel="noopener">View the source</a>
+          <a class="btn btn-quiet" href="https://github.com/LamantinAI/kaeru/blob/main/QUICK_START.md" rel="noopener">Quick start →</a>
+        </div>
+      </div>
+
+      <div class="wrap">
+        <div class="shots">
+          <figure>
+            <div class="frame">
+              <img src="../../assets/products/kaeru-galaxy.webp"
+                   srcset="../../assets/products/kaeru-galaxy.webp 1280w, ../../assets/products/kaeru-galaxy@2x.webp 2048w"
+                   sizes="(min-width: 1160px) 1074px, 92vw"
+                   width="1280" height="720"
+                   alt="The whole vault as a galaxy: each project a coloured constellation around its core, with thin ochre lines bridging projects" />
+            </div>
+            <figcaption><b>The galaxy — where a thought sits.</b> Every project a constellation around its core, each star sized by memory layer, ochre threads where projects touch.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame">
+              <img src="../../assets/products/kaeru-board.webp"
+                   srcset="../../assets/products/kaeru-board.webp 1280w, ../../assets/products/kaeru-board@2x.webp 2048w"
+                   sizes="(min-width: 900px) 45vw, 92vw"
+                   width="1280" height="720" loading="lazy"
+                   alt="The task board: columns of cards with due dates and provenance, and one card opened in a side drawer" />
+            </div>
+            <figcaption><b>The board — what is still owed.</b> Ordered by rot: overdue first, then age, then whether anything links to it at all.</figcaption>
+          </figure>
+          <figure>
+            <div class="frame">
+              <img src="../../assets/products/kaeru-reader.webp"
+                   srcset="../../assets/products/kaeru-reader.webp 1280w, ../../assets/products/kaeru-reader@2x.webp 2048w"
+                   sizes="(min-width: 900px) 45vw, 92vw"
+                   width="1280" height="720" loading="lazy"
+                   alt="The reader: a reasoning chain laid out step by step, with related nodes noted in the margin" />
+            </div>
+            <figcaption><b>The reader — what it says.</b> A saved trail read end to end, each step dated, with what it supersedes or refers to in the margin.</figcaption>
+          </figure>
+        </div>
+      </div>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>An agent that returns, recalls, and reshapes.</h2>
+            <p>Most agents forget everything between sessions. kaeru gives them a typed property graph to think in: episodes and hypotheses while the work is live, settled outcomes and references once it isn't. Open a project and the agent knows what was being thought about, can follow the provenance of a decision, and can pull in what the rest of the team has shared.</p>
+            <p>The name is 蛙 — <i>kaeru</i>, "frog", a homophone of 帰る "to return" and 変える "to change".</p>
+            <p>It is a facilitator, not an enforcer. The curator API offers around forty primitives as available tools; the agent and the person decide when to reach for them. The daemon hints, and never blocks.</p>
+          </div>
+          <ul class="facts">
+            <li>
+              <b>Two tiers</b>
+              <span>A working graph for active thinking and an archival one for settled knowledge — the hippocampus and cortex split, with an explicit, logged promotion between them.</span>
+            </li>
+            <li>
+              <b>Bi-temporal</b>
+              <span>Assertion and retraction history is native to the substrate. Read any node as it is now or as of a past moment; a conflict invalidates the old version rather than deleting it.</span>
+            </li>
+            <li>
+              <b>Reasoning chains</b>
+              <span>The load-bearing path between two nodes saved as a recallable trail — the "why", not just the "what".</span>
+            </li>
+            <li>
+              <b>Local-first</b>
+              <span>A single binary with an embedded CozoDB substrate. No server, no network — until you opt into a shared cloud tier for the team.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>Talking to it.</h2>
+            <p>kaeru speaks the Model Context Protocol, so any MCP-capable agent picks up the whole verb set. There is also a <code>rig</code> adapter for agents that embed the store in-process.</p>
+            <div class="also">
+              <a href="https://github.com/LamantinAI/kaeru/blob/main/docs/architecture.md" rel="noopener">Architecture</a>
+              <a href="https://github.com/LamantinAI/kaeru/blob/main/docs/curator-api.md" rel="noopener">Curator API</a>
+              <a href="https://github.com/LamantinAI/kaeru/tree/main/kaeru-viz" rel="noopener">The visualizer</a>
+            </div>
+          </div>
+          <div class="code-win" style="--cols: 45">
+            <div class="code-bar">
+              <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="code-title">kaeru — shell</span>
+            </div>
+            <pre class="code"><span class="c"># the re-entry ritual, once a project is open</span>
+initiatives
+awake      --initiative myproject
+overview   --initiative myproject
+
+<span class="c"># capture, then connect —
+# an unlinked node is an island</span>
+episode "stand is green after the rollback"
+link    "stand is green…" "rollback decision"
+chain   "first symptom" "rollback decision"</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <img class="watermark" src="../../assets/mark-parchment.png" alt="" width="608" height="220" />
+      <div class="wrap">
+        <h2>Everything we can open, we open.</h2>
+        <div class="contact">
+          <a class="mail" href="mailto:lamantin.research@gmail.com">lamantin.research@gmail.com</a>
+        </div>
+        <div class="rule">
+          <div class="links">
+            <a href="../../">Lamantin AI</a>
+            <a href="../../manifesto/">Manifesto</a>
+            <a href="https://github.com/LamantinAI" rel="noopener">GitHub</a>
+            <a href="https://github.com/LamantinAI/brandbook" rel="noopener">Brand book</a>
+          </div>
+          <small>Lamantin AI · Rust · Python · Edge AI</small>
+        </div>
+      </div>
+    </footer>
+    <script src="../../assets/stars.js?v=7" type="module"></script>
+  </body>
+</html>

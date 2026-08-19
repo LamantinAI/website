@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>plump-ipc — asyncio-native IPC for Python · Lamantin AI</title>
+    <meta name="description" content="A lightweight, asyncio-native IPC framework for command execution and message broadcasting between Python processes." />
+    <link rel="icon" href="../../assets/icon-32.png?v=7" sizes="32x32" />
+    <link rel="icon" href="../../assets/icon-16.png?v=7" sizes="16x16" />
+    <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png?v=7" />
+    <link rel="stylesheet" href="../../assets/fonts.css?v=7" />
+    <link rel="stylesheet" href="../../styles.css?v=7" />
+    <meta property="og:title" content="plump-ipc — asyncio-native IPC for Python · Lamantin AI" />
+    <meta property="og:description" content="A lightweight, asyncio-native IPC framework for command execution and message broadcasting between Python processes." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body data-tier="infra">
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="masthead">
+      <div class="wrap row">
+        <a class="back" href="../../">
+          <span class="arrow" aria-hidden="true">←</span>
+          <img src="../../assets/mark-petrol.png" alt="" width="608" height="220" />
+          <b>Lamantin AI</b>
+        </a>
+        <nav aria-label="Sections">
+          <a href="../../#products">All products</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="p-hero wrap">
+        <span class="p-tier label">Tier 02 · Infrastructure</span>
+        <div class="p-name">
+          <h1>plump-ipc</h1>
+        </div>
+        <p class="lede">A lightweight, asyncio-native IPC framework for talking across process boundaries.</p>
+        <p class="p-meta">
+          <span class="stars" data-stars="plump-ipc"><span class="n">★ 6</span><span class="sep">·</span></span>Python<span class="sep">·</span>MIT
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/LamantinAI/plump-ipc" rel="noopener">View the source</a>
+        </div>
+      </div>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>Get the heavy work off the event loop.</h2>
+            <p>Python's GIL and the single-threaded asyncio loop turn CPU-bound work into a bottleneck: one blocking call and everything else waits. PlumpIPC moves that work into another process and keeps the loop answering.</p>
+            <p>The interface is the same on both sides of the boundary — a synchronous <code>call()</code> and an asyncio-native <code>acall()</code> over the same registered command.</p>
+          </div>
+          <ul class="facts">
+            <li>
+              <b>Dual interface</b>
+              <span>Sync and async callers reach the same worker without two APIs to maintain.</span>
+            </li>
+            <li>
+              <b>Commands by decorator</b>
+              <span>Register a function and it becomes an RPC-style endpoint; stateful services and standalone functions both work.</span>
+            </li>
+            <li>
+              <b>An event bus</b>
+              <span>PlumpQueue broadcasts events to non-blocking asyncio listeners.</span>
+            </li>
+            <li>
+              <b>Pluggable serialization</b>
+              <span>Pickle and JSON built in, with an interface for your own format.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>Registering work.</h2>
+            <p>A decorator on the worker side is the whole contract.</p>
+          </div>
+          <div class="code-win" style="--cols: 50">
+            <div class="code-bar">
+              <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="code-title">worker.py</span>
+            </div>
+            <pre class="code"><span class="c">$ pip install plump-ipc</span>
+
+from plump_ipc import plump
+
+@plump.command()
+def update_stream(stream_id: int, settings: dict):
+    ...
+    return True
+
+def start_worker(conn):
+    plump.child_conn = conn
+    plump.run_worker()</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <img class="watermark" src="../../assets/mark-parchment.png" alt="" width="608" height="220" />
+      <div class="wrap">
+        <h2>Everything we can open, we open.</h2>
+        <div class="contact">
+          <a class="mail" href="mailto:lamantin.research@gmail.com">lamantin.research@gmail.com</a>
+        </div>
+        <div class="rule">
+          <div class="links">
+            <a href="../../">Lamantin AI</a>
+            <a href="../../manifesto/">Manifesto</a>
+            <a href="https://github.com/LamantinAI" rel="noopener">GitHub</a>
+            <a href="https://github.com/LamantinAI/brandbook" rel="noopener">Brand book</a>
+          </div>
+          <small>Lamantin AI · Rust · Python · Edge AI</small>
+        </div>
+      </div>
+    </footer>
+    <script src="../../assets/stars.js?v=7" type="module"></script>
+  </body>
+</html>

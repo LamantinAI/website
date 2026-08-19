@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>crabbyq — message-driven microservices in Rust · Lamantin AI</title>
+    <meta name="description" content="A declarative, asynchronous Rust framework for message-driven microservices, with axum-like ergonomics over NATS, Redis, and MQTT." />
+    <link rel="icon" href="../../assets/icon-32.png?v=7" sizes="32x32" />
+    <link rel="icon" href="../../assets/icon-16.png?v=7" sizes="16x16" />
+    <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png?v=7" />
+    <link rel="stylesheet" href="../../assets/fonts.css?v=7" />
+    <link rel="stylesheet" href="../../styles.css?v=7" />
+    <meta property="og:title" content="crabbyq — message-driven microservices in Rust · Lamantin AI" />
+    <meta property="og:description" content="A declarative, asynchronous Rust framework for message-driven microservices, with axum-like ergonomics over NATS, Redis, and MQTT." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body data-tier="infra">
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="masthead">
+      <div class="wrap row">
+        <a class="back" href="../../">
+          <span class="arrow" aria-hidden="true">←</span>
+          <img src="../../assets/mark-petrol.png" alt="" width="608" height="220" />
+          <b>Lamantin AI</b>
+        </a>
+        <nav aria-label="Sections">
+          <a href="../../#products">All products</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="p-hero wrap">
+        <span class="p-tier label">Tier 02 · Infrastructure</span>
+        <div class="p-name">
+          <h1>crabbyq</h1>
+          <span class="p-glyph" aria-hidden="true">🦀</span>
+        </div>
+        <p class="lede">A declarative, asynchronous Rust framework for message-driven microservices.</p>
+        <p class="p-meta">
+          <span class="stars" data-stars="crabbyq"><span class="n">★ 21</span><span class="sep">·</span></span>Rust<span class="sep">·</span>MIT
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/LamantinAI/crabbyq" rel="noopener">View the source</a>
+        </div>
+      </div>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>Axum's ergonomics, a broker's mindset.</h2>
+            <p>CrabbyQ takes the broker subscription loop and the route dispatch off your desk so the code you write is handlers and domain logic. Underneath it is Tower — routes are <code>tower::Service</code>s, which is what lets layers and middleware fall out naturally rather than being bolted on.</p>
+            <p>The core stays light on purpose: only JSON is on by default, and every broker backend is an explicit Cargo feature.</p>
+          </div>
+          <ul class="facts">
+            <li>
+              <b>Broker-agnostic core</b>
+              <span>One <code>Router</code> with typed shared state, and route registration that composes — including whole sub-routers.</span>
+            </li>
+            <li>
+              <b>Familiar extractors</b>
+              <span>State, Subject, Headers, Body, and optional payload extractors like Json and Cbor, with the axum rule that body-consuming extractors go last.</span>
+            </li>
+            <li>
+              <b>Request–reply</b>
+              <span>RPC-style round trips through handler return values, on top of a publish/subscribe substrate.</span>
+            </li>
+            <li>
+              <b>Real backends</b>
+              <span>NATS (including JetStream routes and publishing), Redis pub/sub, and MQTT.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>A handler is a function.</h2>
+            <p>No subscription loop, no dispatch table — a route name and something async to run.</p>
+          </div>
+          <div class="code-win" style="--cols: 47">
+            <div class="code-bar">
+              <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="code-title">main.rs</span>
+            </div>
+            <pre class="code">use crabbyq::prelude::*;
+use crabbyq::brokers::NatsBroker;
+
+async fn handle(e: Event) -&gt; CrabbyResult&lt;()&gt; {
+    info!("got: {}", e.subject());
+    Ok(())
+}
+
+let app = Router::new()
+    .route("test.simple", handle)
+    .into_service(nats_broker);</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <img class="watermark" src="../../assets/mark-parchment.png" alt="" width="608" height="220" />
+      <div class="wrap">
+        <h2>Everything we can open, we open.</h2>
+        <div class="contact">
+          <a class="mail" href="mailto:lamantin.research@gmail.com">lamantin.research@gmail.com</a>
+        </div>
+        <div class="rule">
+          <div class="links">
+            <a href="../../">Lamantin AI</a>
+            <a href="../../manifesto/">Manifesto</a>
+            <a href="https://github.com/LamantinAI" rel="noopener">GitHub</a>
+            <a href="https://github.com/LamantinAI/brandbook" rel="noopener">Brand book</a>
+          </div>
+          <small>Lamantin AI · Rust · Python · Edge AI</small>
+        </div>
+      </div>
+    </footer>
+    <script src="../../assets/stars.js?v=7" type="module"></script>
+  </body>
+</html>

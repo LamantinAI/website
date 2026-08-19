@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>mobius-rtsp — endless RTSP video streaming · Lamantin AI</title>
+    <meta name="description" content="A GStreamer-based RTSP server that turns a folder of video files into endless streams." />
+    <link rel="icon" href="../../assets/icon-32.png?v=7" sizes="32x32" />
+    <link rel="icon" href="../../assets/icon-16.png?v=7" sizes="16x16" />
+    <link rel="apple-touch-icon" href="../../assets/apple-touch-icon.png?v=7" />
+    <link rel="stylesheet" href="../../assets/fonts.css?v=7" />
+    <link rel="stylesheet" href="../../styles.css?v=7" />
+    <meta property="og:title" content="mobius-rtsp — endless RTSP video streaming · Lamantin AI" />
+    <meta property="og:description" content="A GStreamer-based RTSP server that turns a folder of video files into endless streams." />
+    <meta property="og:type" content="website" />
+  </head>
+  <body data-tier="infra">
+    <a class="skip" href="#main">Skip to content</a>
+
+    <header class="masthead">
+      <div class="wrap row">
+        <a class="back" href="../../">
+          <span class="arrow" aria-hidden="true">←</span>
+          <img src="../../assets/mark-petrol.png" alt="" width="608" height="220" />
+          <b>Lamantin AI</b>
+        </a>
+        <nav aria-label="Sections">
+          <a href="../../#products">All products</a>
+        </nav>
+      </div>
+    </header>
+
+    <main id="main">
+      <div class="p-hero wrap">
+        <span class="p-tier label">Tier 02 · Infrastructure</span>
+        <div class="p-name">
+          <h1>mobius-rtsp</h1>
+        </div>
+        <p class="lede">A GStreamer-based RTSP server for endless video streaming.</p>
+        <p class="p-meta">
+          <span class="stars" data-stars="mobius-rtsp"><span class="n">★ 6</span><span class="sep">·</span></span>Rust<span class="sep">·</span>MIT
+        </p>
+        <div class="actions">
+          <a class="btn btn-primary" href="https://github.com/LamantinAI/mobius-rtsp" rel="noopener">View the source</a>
+        </div>
+      </div>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>Files in a folder become streams.</h2>
+            <p>Drop video files into <code>data/videos</code>. On startup the server reads their names and publishes each one as an RTSP stream — the filename, without its extension, is the mount point.</p>
+            <p>In infinite mode each video decodes in its own producer pipeline and is forwarded into the RTSP pipeline, so a client that connects an hour later still finds a live stream rather than a finished file.</p>
+          </div>
+          <ul class="facts">
+            <li>
+              <b>Endless by construction</b>
+              <span>Playback loops inside the pipeline, so the stream has no end for a consumer to hit.</span>
+            </li>
+            <li>
+              <b>One pipeline per video</b>
+              <span>Each source decodes independently and feeds the server, which keeps one bad file from taking the rest down.</span>
+            </li>
+            <li>
+              <b>GStreamer underneath</b>
+              <span>The usual plugin set — base, good, bad, ugly — plus <code>libgstrtspserver</code>.</span>
+            </li>
+            <li>
+              <b>Rust 1.88+</b>
+              <span>A single binary, built from source.</span>
+            </li>
+          </ul>
+        </div>
+      </section>
+
+      <section>
+        <div class="wrap p-body">
+          <div class="prose">
+            <h2>Where the stream shows up.</h2>
+            <p>A file on disk maps straight to a mount point, so the URL is predictable.</p>
+          </div>
+          <div class="code-win" style="--cols: 51">
+            <div class="code-bar">
+              <span class="lights" aria-hidden="true"><i></i><i></i><i></i></span>
+              <span class="code-title">paths</span>
+            </div>
+            <pre class="code"><span class="c"># the file</span>
+data/videos/9c0a140d548c8313e7719b7590d029dc.mp4
+
+<span class="c"># the stream</span>
+rtsp://&lt;host&gt;:8554/9c0a140d548c8313e7719b7590d029dc</pre>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <img class="watermark" src="../../assets/mark-parchment.png" alt="" width="608" height="220" />
+      <div class="wrap">
+        <h2>Everything we can open, we open.</h2>
+        <div class="contact">
+          <a class="mail" href="mailto:lamantin.research@gmail.com">lamantin.research@gmail.com</a>
+        </div>
+        <div class="rule">
+          <div class="links">
+            <a href="../../">Lamantin AI</a>
+            <a href="../../manifesto/">Manifesto</a>
+            <a href="https://github.com/LamantinAI" rel="noopener">GitHub</a>
+            <a href="https://github.com/LamantinAI/brandbook" rel="noopener">Brand book</a>
+          </div>
+          <small>Lamantin AI · Rust · Python · Edge AI</small>
+        </div>
+      </div>
+    </footer>
+    <script src="../../assets/stars.js?v=7" type="module"></script>
+  </body>
+</html>
