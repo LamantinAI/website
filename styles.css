@@ -179,15 +179,14 @@ section { padding-block: var(--section); border-top: 1px solid var(--line-2); }
    17px italic all fighting for the same baseline, with a 3px rule centred in
    the shortest box of the three. */
 .tier-head { margin-bottom: 20px; }
-.tier-head .key { display: inline-flex; align-items: center; gap: 9px; margin-bottom: 10px; }
-.tier-head .key::before { content: ""; width: 22px; height: 3px; border-radius: 2px; flex: none; }
+/* The rule *is* the label now — the tier's name lives in the heading below it,
+   so a text label here only repeated it. */
+.tier-head .key { display: block; width: 22px; height: 3px; border-radius: 2px; margin-bottom: 10px; }
 .tier-name { display: flex; align-items: baseline; flex-wrap: wrap; gap: 4px 12px; }
 .tier-head h3 { font-size: 21px; }
 .tier-head .job { font-style: italic; color: var(--muted); font-size: 17px; }
-.tier-infra .key::before { background: var(--seal); }
-.tier-mind .key::before { background: var(--gold); }
-.tier-infra .key { color: var(--seal); }
-.tier-mind .key { color: var(--gold-ink); }
+.tier-infra .key { background: var(--seal); }
+.tier-mind .key { background: var(--gold); }
 
 .cards { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(300px, 100%), 1fr)); gap: var(--gap); }
 .card {
@@ -300,6 +299,21 @@ body[data-tier="mind"]  { --tier: var(--gold); --tier-ink: var(--gold-ink); }
 .back:hover .arrow { color: var(--petrol-deep); transform: translateX(-2px); }
 
 .p-hero { padding-block: clamp(32px, 4vw, 52px) var(--section); }
+
+/* A hero with a portrait is two columns; a hero without one is untouched — and
+   eight of the nine pages have none, so the rule has to be opt-in rather than
+   a default the others override. The portrait yields first: below the point
+   where two columns stop fitting it goes back under the text, at a size that
+   suits a phone rather than a squeezed column. */
+.p-hero.has-portrait { display: grid; grid-template-columns: minmax(0, 1fr) auto;
+  gap: clamp(28px, 5vw, 64px); align-items: center; }
+.p-portrait { margin: 0; width: min(300px, 34vw); }
+.p-portrait img { display: block; width: 100%; height: auto; border-radius: 999px;
+  outline: 1px solid rgba(0, 0, 0, 0.1); outline-offset: -1px; }
+@media (max-width: 800px) {
+  .p-hero.has-portrait { grid-template-columns: 1fr; }
+  .p-portrait { width: min(220px, 52vw); order: -1; }
+}
 .p-tier { display: inline-flex; align-items: center; gap: 9px; color: var(--tier-ink); margin-bottom: 22px; }
 .p-tier::before { content: ""; width: 22px; height: 3px; border-radius: 2px; background: var(--tier); flex: none; }
 .p-name { display: flex; align-items: baseline; flex-wrap: wrap; gap: 16px; }

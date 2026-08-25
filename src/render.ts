@@ -88,7 +88,7 @@ const tierBlock = (tier: 'infra' | 'mind') => {
   return `
           <div class="tier tier-${tier === 'infra' ? 'infra' : 'mind'}">
             <div class="tier-head">
-              <span class="key label">${t.label}</span>
+              <span class="key" aria-hidden="true"></span>
               <div class="tier-name">
                 <h3>${t.name}</h3>
                 <span class="job">${t.job}</span>
@@ -238,16 +238,16 @@ export const productPage = (p: Product) => {
         </div>
       </div>
 `
+  // …and moves into the hero as its right-hand column. It used to render as a
+  // band of its own *below* the hero: a 340px circle pinned left, the right
+  // half of the screen empty, and the hero above it only as wide as its own
+  // text — two narrow blocks stacked down the left with the page's whole right
+  // side unused twice over.
   const portrait = !p.portrait ? '' : `
-      <div class="wrap">
-        <figure class="shot portrait">
-          <div class="frame">
-            <img src="../../assets/products/${p.portrait.file}.webp" width="640" height="640"
-                 alt="${esc(p.portrait.alt)}" />
-          </div>
-        </figure>
-      </div>
-`
+        <figure class="p-portrait">
+          <img src="../../assets/products/${p.portrait.file}.webp" width="640" height="640"
+               alt="${esc(p.portrait.alt)}" />
+        </figure>`
   const right = p.more.code
     ? codeWindow(p.more.code, p.more.codeTitle)
     : `          <ul class="facts">\n${facts(p.more.list ?? [])}\n          </ul>`
@@ -272,8 +272,9 @@ export const productPage = (p: Product) => {
     </header>
 
     <main id="main">
-      <div class="p-hero wrap">
-        <span class="p-tier label">Tier ${p.tier === 'infra' ? '02 · Infrastructure' : '03 · Intelligence'}</span>
+      <div class="p-hero wrap${p.portrait ? ' has-portrait' : ''}">
+        <div class="p-lead">
+        <span class="p-tier label">${t.name}</span>
         <div class="p-name">
           <h1>${p.name}</h1>${p.glyph ? `\n          <span class="p-glyph" aria-hidden="true">${p.glyph}</span>` : ''}
         </div>
@@ -286,8 +287,9 @@ export const productPage = (p: Product) => {
           <a class="btn btn-primary" href="${ORG.github}/${p.slug}" rel="noopener">View the source</a>`}${
             p.extraAction ? `\n          <a class="btn btn-quiet" href="${p.extraAction.href}" rel="noopener">${p.extraAction.label}</a>` : ''}
         </div>
+        </div>${portrait}
       </div>
-${shots}${portrait}
+${shots}
       <section>
         <div class="wrap p-body">
           <div class="prose">

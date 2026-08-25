@@ -52,9 +52,17 @@ export type Product = {
   extraAction?: { label: string; href: string }
 }
 
-export const TIERS: Record<Tier, { label: string; name: string; job: string }> = {
-  infra: { label: 'Tier 02 · Vermillion', name: 'Infrastructure', job: 'what everything runs on' },
-  mind: { label: 'Tier 03 · Ochre gold', name: 'Intelligence', job: 'what thinks' },
+/** A tier has a name and a job. It deliberately has no number and no pigment.
+ *
+ *  The brand book numbers its tiers and names their colours, but that is a
+ *  document telling a designer which ink to reach for — not a hierarchy a
+ *  visitor needs to be told about. "Tier 02" invites the question "what is
+ *  Tier 01, and is 03 better?", and neither has an answer worth a reader's
+ *  time. The colour still does the work the brand book asks of it; it just
+ *  does it by being a colour rather than by being named. */
+export const TIERS: Record<Tier, { name: string; job: string }> = {
+  infra: { name: 'Infrastructure', job: 'what everything runs on' },
+  mind: { name: 'Intelligence', job: 'what thinks' },
 }
 
 export const ORG = {
@@ -64,12 +72,17 @@ export const ORG = {
   say: `A research organization working on computer vision, machine learning, and the
         systems underneath them. We treat ethics as an engineering concern rather than a
         filter bolted on at the end: we don't limit intelligence, we shape its character.`,
+  /** The subject is embodied AI; the stack is what it is built on. The two were
+   *  the wrong way round here — "visual data and distributed systems" named the
+   *  means and left the end as an afterthought at the close of the paragraph. */
   work: {
-    headline: 'An ecosystem for visual data and distributed systems.',
-    prose: `Rust, Python, and inference at the edge — chosen for reliability and
-            performance, which we consider the prerequisite for intelligence anyone can
-            be responsible for. The libraries, runtimes, and memory we publish are the
-            groundwork for embodied AI and multimodal models.`,
+    headline: 'An ecosystem for embodied AI.',
+    prose: `One loop runs through everything we build — perception, experience, memory,
+            reflection, reaction — and each of our products is a stage of it: the runtime
+            that senses and acts, the memory that persists between sessions, the reasoning
+            turn in between. Rust, Python and inference at the edge are what it stands on,
+            chosen for the reliability and performance we consider the prerequisite for
+            intelligence anyone can be responsible for.`,
     stack: ['Rust', 'Python', 'Edge AI', 'Computer vision', 'Distributed systems'],
   },
   foundations: [
@@ -107,9 +120,8 @@ export const MANIFESTO = {
             solutions in Computer Vision, Machine Learning, and AI. Our technology stack
             (Rust, Python, Edge AI) is driven by a commitment to ultimate reliability and
             performance, which we consider a prerequisite for creating responsible and
-            ethical intelligence. We are building an ecosystem for visual data and
-            distributed systems, laying the foundation for embodied AI and multimodal
-            models.`,
+            ethical intelligence. We are building an ecosystem for embodied AI and
+            multimodal models, on a foundation of visual data and distributed systems.`,
   ethics: {
     heading: 'Engineering ethics',
     lede: `We view ethics not as an external layer of censorship filters, but as an
@@ -330,6 +342,47 @@ def update_stream(stream_id: int, settings: dict):
 def start_worker(conn):
     plump.child_conn = conn
     plump.run_worker()`,
+    },
+  },
+  {
+    slug: 'mayak', name: 'mayak', tier: 'infra', stars: 5, lang: 'Python',
+    note: 'a template, not a library',
+    tagline: 'a backend template for services coding agents maintain',
+    desc: 'A FastAPI backend template for services that are built and maintained by coding agents — one worked vertical to copy, and gates that fail on the mistakes this kind of codebase actually makes.',
+    lede: 'A FastAPI backend template for services that are built and maintained by coding agents.',
+    card: 'A FastAPI backend template for services coding agents build and maintain — optimised for the hundredth change, not the first hour.',
+    headline: 'Written for the hundredth change.',
+    body: [
+      `Most templates optimise for the first hour: they hand you a running app. mayak optimises
+       for the hundredth change, made by someone — human or model — who was not there when the
+       first hour happened.`,
+      `That is a different problem. An agent editing a codebase it did not write has no memory
+       of the decisions behind it, and no instinct for which mistakes this particular shape of
+       project invites. So the template ships one worked vertical to copy from, a validation
+       suite that fails on exactly those mistakes, and logs that can be read without grep
+       gymnastics.`,
+      `Its own gates are held to the same standard. Defects are injected on purpose to check
+       that the checks actually catch them — a test suite that passes proves nothing until you
+       know it can fail for the right reason.`,
+    ],
+    facts: [
+      { term: 'Use it as a template', def: 'A GitHub template repository, not a dependency. You start from a copy and own it outright — there is no upstream to track and nothing to upgrade.' },
+      { term: 'One worked vertical', def: 'A single feature carried end to end — route, service, storage, tests, logs — as the example every later feature is copied from, so an agent has a shape to match instead of a convention to infer.' },
+      { term: 'Gates that have been tested', def: 'The validation suite is checked by injecting defects and confirming it stops them. A gate nobody has watched fail is a gate nobody knows works.' },
+      { term: 'Two agents, one source', def: 'Claude Code and Codex are both supported, and their instruction files are generated from a single hand-written rules document rather than kept in step by hand.' },
+    ],
+    more: {
+      headline: 'What it is built on.',
+      prose: `Python 3.13 and FastAPI, with PostgreSQL reached through <code>psycopg</code> at
+              runtime — SQLAlchemy appears only as Alembic's metadata source, and is optional.
+              The LLM client speaks the OpenAI-compatible API, so the model behind it is a
+              configuration choice. Logging is semantic NDJSON.`,
+      list: [
+        { term: 'Python 3.13+ · FastAPI', def: 'The runtime, kept deliberately ordinary — the template earns its keep in discipline, not in novelty.' },
+        { term: 'PostgreSQL via psycopg', def: 'Direct at runtime; SQLAlchemy is Alembic\'s metadata source and nothing more.' },
+        { term: 'OpenAI-compatible client', def: 'Any provider that speaks the API, chosen in configuration rather than in code.' },
+        { term: 'Semantic NDJSON logs', def: 'Readable without grep gymnastics, which matters when the reader is a model with a context budget.' },
+      ],
     },
   },
   {

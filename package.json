@@ -5,7 +5,7 @@
   "description": "The Lamantin AI site. Node 24 runs the TypeScript directly — there is nothing to install.",
   "engines": { "node": ">=22.6" },
   "scripts": {
-    "build": "node src/build.ts",
+    "build": "node --experimental-strip-types src/build.ts",
     "serve": "python3 -m http.server 8830"
   }
 }

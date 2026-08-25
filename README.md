@@ -8,9 +8,11 @@ node src/build.ts    # rewrite the HTML after editing src/products.ts
 npm run serve        # http://localhost:8830
 ```
 
-There is nothing to install. Node 24 runs the TypeScript directly, so the
-generator has no bundler, no transpiler and no `node_modules` — `package.json`
-exists only to name the two commands.
+There is nothing to install. Node runs the TypeScript directly, so the generator
+has no bundler, no transpiler and no `node_modules` — `package.json` exists only
+to name the two commands. Node 24 needs no flag; `npm run build` passes
+`--experimental-strip-types` so the same command also works on 22.6+, where
+stripping is still behind it.
 
 ## How it is put together
 
