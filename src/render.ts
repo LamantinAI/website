@@ -115,6 +115,7 @@ export const indexPage = () => shell({
           <a href="#products">Products</a>
           <a href="#ethics">Ethics</a>
           <a href="#openness">Openness</a>
+          <a href="#together">Working together</a>
         </nav>
       </div>
     </header>
@@ -189,6 +190,22 @@ ${tierBlock('mind')}
           </div>
           <ul class="publishes">${ORG.publishes.map((x) => `\n            <li>${x}</li>`).join('')}
           </ul>
+        </div>
+      </section>
+      <section id="together">
+        <div class="wrap">
+          <div class="head prose">
+            <span class="label">Working together</span>
+            <h2>${ORG.together.headline}</h2>
+            <p>${tidy(ORG.together.prose)}</p>
+          </div>
+          <div class="ways">${ORG.together.ways.map((w) => `
+            <div class="way">
+              <h3>${w.term}</h3>
+              <p>${tidy(w.def)}</p>
+            </div>`).join('')}
+          </div>
+          <p class="condition">${tidy(ORG.together.condition)}</p>
         </div>
       </section>
     </main>

@@ -99,6 +99,45 @@ export const ORG = {
   ] as Tenet[],
   publishes: ['Library and framework source', 'Training scripts', 'System prompts',
               'Architectural experiment results', 'The brand system itself'],
+
+  /** How the work is sustained, and what engaging with it does and does not
+   *  mean. This section exists because openness raises a question it does not
+   *  answer — if everything is published, what holds it up? — and because the
+   *  answer here is unusual enough that leaving it unsaid invites the wrong
+   *  assumption: that this is a consultancy with a GitHub account. */
+  together: {
+    headline: 'Not a vendor. A practice you can support.',
+    prose: `Lamantin AI does not sell services. There are no contracts, no service
+            agreements and no assignment of intellectual property — every financial
+            relationship takes the form of voluntary support. That is a structural
+            choice, not modesty about invoicing: support is decoupled from control,
+            so no supporter owns or steers the technical direction.`,
+    ways: [
+      { term: 'Support the work',
+        def: `Individuals and organizations support the work through public platforms.
+              Organizational supporters get visibility into what is underway and a
+              seat in the conversation about where it goes next — acknowledgements
+              of an aligned supporter, extended informally, not rights that were
+              bought.` },
+      { term: 'Build something together',
+        def: `A small number of organizations work with us on applied research and
+              real systems. These are joint explorations between practitioners: a
+              collaboration has a direction, not a specification. We keep the number
+              deliberately small, because spreading thin is how depth is lost.` },
+      { term: 'Borrow an afternoon',
+        def: `Short, focused sessions for teams already using the tools or weighing
+              them up — architecture reviews, performance audits, onboarding. A
+              single review or a workshop, with a clear scope and a clear end.` },
+    ],
+    /** The condition, stated where it cannot be missed. It is the one thing in
+     *  this section that rules people out, and burying it would waste both
+     *  sides' time. */
+    condition: `Whatever we build together comes back into the open ecosystem —
+                the code, the architecture, the findings. Results may stay private
+                while they are being validated, which is an engineering rhythm
+                rather than an exclusivity window. Work that must stay closed
+                permanently is work for someone else.`,
+  },
   mail: 'lamantin.research@gmail.com',
   github: 'https://github.com/LamantinAI',
   manifestoSource: 'https://github.com/LamantinAI/.github/blob/main/profile/README.md',
@@ -427,7 +466,12 @@ def start_worker(conn):
     },
   },
   {
-    slug: 'albert', name: 'albert', tier: 'mind', stars: 3, lang: 'Rust',
+    // The one product with a face. Every other name here is a package you
+    // would type — lowercase, as you would type it. Albert is a persona, the
+    // page carries his portrait, and the prose already called him Albert while
+    // the card underneath still said `albert`. The capital settles that.
+    // `slug` stays lowercase: it is the repository and the URL, not the name.
+    slug: 'albert', name: 'Albert', tier: 'mind', stars: 3, lang: 'Rust',
     tagline: 'an always-on AI assistant',
     desc: 'An always-on AI assistant assembled from Lamantin substrates — memory it queries rather than a prompt it re-reads.',
     lede: 'An always-on AI assistant that grows with you — and stays fast doing it.',
