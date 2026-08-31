@@ -241,11 +241,11 @@ section { padding-block: var(--section); border-top: 1px solid var(--line-2); }
 .publishes li:last-child { border-bottom: 0; }
 .aside-note { font-style: italic; color: var(--muted); margin-top: 20px; }
 
-/* ── working together ─────────────────────────────────────
- * Three ways in, side by side, and then the condition on its own. The
- * condition is the one paragraph here that rules someone out, so it gets the
- * weight of a standalone line rather than a fourth column where it would read
- * as another option.
+/* ── partnership ──────────────────────────────────────────
+ * The ways in, side by side, and then the condition on its own. The condition
+ * is the one paragraph here that rules someone out, so it gets the weight of a
+ * standalone line rather than another column where it would read as one more
+ * option. The grid is auto-fit, so adding a way in does not need a rule here.
  */
 .ways { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(260px, 100%), 1fr));
   gap: 28px var(--gap); margin-top: 34px; }

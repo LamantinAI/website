@@ -27,6 +27,12 @@ export type Product = {
   /** No public repository yet: no source link, no star count, and the meta
    *  line says so rather than implying an MIT release that isn't there. */
   unreleased?: true
+  /** MIT unless this says otherwise. It has to be per-product now that one of
+   *  them is source-available rather than open source: "you can read it" and
+   *  "you can host it for other people" are different promises, and a meta
+   *  line that says MIT where the LICENSE says BSL is the kind of thing
+   *  someone discovers after they have already built on it. */
+  licence?: 'BSL 1.1'
   lang: 'Rust' | 'Python'
   note?: string            // anything else for the meta line
   tagline: string          // completes the <title>
@@ -100,42 +106,53 @@ export const ORG = {
   publishes: ['Library and framework source', 'Training scripts', 'System prompts',
               'Architectural experiment results', 'The brand system itself'],
 
-  /** How the work is sustained, and what engaging with it does and does not
-   *  mean. This section exists because openness raises a question it does not
-   *  answer — if everything is published, what holds it up? — and because the
-   *  answer here is unusual enough that leaving it unsaid invites the wrong
-   *  assumption: that this is a consultancy with a GitHub account. */
-  together: {
-    headline: 'Not a vendor. A practice you can support.',
-    prose: `Lamantin AI does not sell services. There are no contracts, no service
-            agreements and no assignment of intellectual property — every financial
-            relationship takes the form of voluntary support. That is a structural
-            choice, not modesty about invoicing: support is decoupled from control,
-            so no supporter owns or steers the technical direction.`,
+  /** The forms working with us can take.
+   *
+   *  This section used to open with "Lamantin AI does not sell services",
+   *  which was inherited from the partnership documents and untrue. The fix is
+   *  to drop the claim, not to replace it with its opposite: money is not what
+   *  this section is about, and naming it on every line made the page read
+   *  like a rate card. Nothing here says paid, and nothing needs to — a team
+   *  asking for an architecture review already knows how that works. What is
+   *  worth a reader's time is what kind of relationship it is, how much of it
+   *  we can take on, and the one condition that rules people out. */
+  partnership: {
+    headline: 'Ways to work with us.',
+    prose: `Lamantin AI is a research organization, and working with us looks like
+            research: a hard problem, an architecture that wants a second pair of eyes,
+            a system that ought to be smarter than it is. We take on few of these at a time and
+            stay with them — depth is the thing we actually have to offer. Direction
+            stays ours throughout, which is what lets us say yes to the problems worth
+            the attention and no to the rest.`,
     ways: [
+      { term: 'Expertise',
+        def: `Consulting on a research question or a project already under way, and
+              lectures, seminars and masterclasses in AI for the team that will have
+              to live with the result. What changes hands here is knowledge, not
+              work.` },
+      { term: 'Building something',
+        def: `Where a problem is hard enough to be worth it, we build the thing rather
+              than advise on it: an AI product, or the part of an existing one that
+              has to think. A longer relationship than a review, and it carries the
+              condition below.` },
+      { term: 'Research together',
+        def: `Applied research with an organization that brings a real problem and the
+              patience for it. A joint exploration between practitioners, carrying a
+              direction rather than a specification. We take on very few at a time,
+              because spreading thin is how depth is lost.` },
       { term: 'Support the work',
-        def: `Individuals and organizations support the work through public platforms.
-              Organizational supporters get visibility into what is underway and a
-              seat in the conversation about where it goes next — acknowledgements
-              of an aligned supporter, extended informally, not rights that were
-              bought.` },
-      { term: 'Build something together',
-        def: `A small number of organizations work with us on applied research and
-              real systems. These are joint explorations between practitioners: a
-              collaboration has a direction, not a specification. We keep the number
-              deliberately small, because spreading thin is how depth is lost.` },
-      { term: 'Borrow an afternoon',
-        def: `Short, focused sessions for teams already using the tools or weighing
-              them up — architecture reviews, performance audits, onboarding. A
-              single review or a workshop, with a clear scope and a clear end.` },
+        def: `The work can be supported through public platforms. An organization that
+              does gets visibility into what is underway and a seat in the conversation
+              about where it goes next — the acknowledgement of an aligned supporter,
+              extended informally.` },
     ],
     /** The condition, stated where it cannot be missed. It is the one thing in
      *  this section that rules people out, and burying it would waste both
      *  sides' time. */
-    condition: `Whatever we build together comes back into the open ecosystem —
+    condition: `The core technology we build for you is opened to everyone afterwards —
                 the code, the architecture, the findings. Results may stay private
-                while they are being validated, which is an engineering rhythm
-                rather than an exclusivity window. Work that must stay closed
+                while they are being validated, which is an engineering rhythm rather
+                than an exclusivity window. Work whose core has to stay closed
                 permanently is work for someone else.`,
   },
   mail: 'lamantin.research@gmail.com',
@@ -182,6 +199,7 @@ export const MANIFESTO = {
 export const PRODUCTS: Product[] = [
   {
     slug: 'kaeru', name: 'kaeru', glyph: '蛙', tier: 'infra', stars: 24, lang: 'Rust',
+    licence: 'BSL 1.1',
     note: 'pre-1.0 alpha',
     tagline: 'cognitive memory for LLM agents',
     desc: 'A typed, bi-temporal graph that agents think in — local-first for each agent, with an optional shared cloud tier for a team.',
@@ -205,6 +223,7 @@ export const PRODUCTS: Product[] = [
       { term: 'Bi-temporal', def: 'Assertion and retraction history is native to the substrate. Read any node as it is now or as of a past moment; a conflict invalidates the old version rather than deleting it.' },
       { term: 'Reasoning chains', def: 'The load-bearing path between two nodes saved as a recallable trail — the "why", not just the "what".' },
       { term: 'Local-first', def: 'A single binary with an embedded CozoDB substrate. No server, no network — until you opt into a shared cloud tier for the team.' },
+      { term: 'Source-available', def: 'BSL 1.1, not MIT: read it, change it, run it inside your own organization. Offering it to other people as a hosted service is the one right reserved to us.' },
     ],
     shots: [
       { file: 'kaeru-galaxy', alt: 'The whole vault as a galaxy: each project a coloured constellation around its core, with thin ochre lines bridging projects',
@@ -472,6 +491,7 @@ def start_worker(conn):
     // the card underneath still said `albert`. The capital settles that.
     // `slug` stays lowercase: it is the repository and the URL, not the name.
     slug: 'albert', name: 'Albert', tier: 'mind', stars: 3, lang: 'Rust',
+    licence: 'BSL 1.1',
     tagline: 'an always-on AI assistant',
     desc: 'An always-on AI assistant assembled from Lamantin substrates — memory it queries rather than a prompt it re-reads.',
     lede: 'An always-on AI assistant that grows with you — and stays fast doing it.',

@@ -73,8 +73,10 @@ const stars = (p: Product) =>
   `<span class="n">★ ${p.stars}</span><span class="sep">·</span></span>`
 
 /** What the meta line closes with: a licence for what is out, an honest
- *  status for what is not. */
-const licence = (p: Product) => (p.unreleased ? 'not yet public' : 'MIT')
+ *  status for what is not. MIT is the default rather than the rule — kaeru
+ *  ships under BSL, and a card that rounded that off to "MIT" would be telling
+ *  a reader they are free to do something the LICENSE does not allow. */
+const licence = (p: Product) => (p.unreleased ? 'not yet public' : p.licence ?? 'MIT')
 
 // ── the index ─────────────────────────────────────────────────────────────
 const tierBlock = (tier: 'infra' | 'mind') => {
@@ -115,7 +117,7 @@ export const indexPage = () => shell({
           <a href="#products">Products</a>
           <a href="#ethics">Ethics</a>
           <a href="#openness">Openness</a>
-          <a href="#together">Working together</a>
+          <a href="#partnership">Partnership</a>
         </nav>
       </div>
     </header>
@@ -153,7 +155,8 @@ export const indexPage = () => shell({
             <h2>What we've published.</h2>
             <p>Colour follows a product's primary job, never its stack: the rails everything
               runs on carry the vermillion seal, the things that reason and act carry the
-              gilt. All of it is MIT.</p>
+              gilt. Most of it is MIT; kaeru and Albert are source-available under BSL,
+              and every card names which.</p>
           </div>
 ${tierBlock('infra')}
 ${tierBlock('mind')}
@@ -192,20 +195,20 @@ ${tierBlock('mind')}
           </ul>
         </div>
       </section>
-      <section id="together">
+      <section id="partnership">
         <div class="wrap">
           <div class="head prose">
-            <span class="label">Working together</span>
-            <h2>${ORG.together.headline}</h2>
-            <p>${tidy(ORG.together.prose)}</p>
+            <span class="label">Partnership</span>
+            <h2>${ORG.partnership.headline}</h2>
+            <p>${tidy(ORG.partnership.prose)}</p>
           </div>
-          <div class="ways">${ORG.together.ways.map((w) => `
+          <div class="ways">${ORG.partnership.ways.map((w) => `
             <div class="way">
               <h3>${w.term}</h3>
               <p>${tidy(w.def)}</p>
             </div>`).join('')}
           </div>
-          <p class="condition">${tidy(ORG.together.condition)}</p>
+          <p class="condition">${tidy(ORG.partnership.condition)}</p>
         </div>
       </section>
     </main>
