@@ -1,7 +1,6 @@
 # Lamantin AI — site
 
-The organization's face: eight static pages, generated from one file of
-content.
+The organization's face: static pages, generated from one file of content.
 
 ```bash
 node src/build.ts    # rewrite the HTML after editing src/products.ts
@@ -22,7 +21,7 @@ src/render.ts     the templates
 src/build.ts      writes index.html and products/<slug>/index.html
 ```
 
-The seven product pages were 70% identical markup when they were written by
+The product pages were 70% identical markup when they were written by
 hand; now they share one template and differ only in their entry. The tier is
 part of the type, so a fourth colour will not compile.
 
