@@ -16,8 +16,20 @@ const esc = (s: string) => s.replace(/&(?![a-z#]+;)/g, '&amp;').replace(/"/g, '&
 /** Collapses the indentation that keeps the data file readable. */
 const tidy = (s: string) => s.replace(/\s*\n\s*/g, ' ').trim()
 
+/** The site's own address, absolute. Everything below needs it: a canonical
+ *  tag, an Open Graph URL and a sitemap entry are all statements about where a
+ *  page lives, and a relative path cannot make one. */
+const abs = (path: string) => `${ORG.url}${path}`
+
+/** The social card. One image for the whole site rather than one per page:
+ *  a per-product card would be nine images to keep in step with nine pages,
+ *  and the thing being shared is the organization either way. */
+const OG_IMAGE = { path: '/assets/og.png', w: 1200, h: 630,
+  alt: 'Lamantin AI — reliable tools, built in the open' }
+
 const shell = (o: {
-  up: string; title: string; desc: string; tier?: string; body: string; scripts?: string
+  up: string; path: string; title: string; desc: string; tier?: string; body: string
+  head?: string; scripts?: string
 }) => `<!doctype html>
 <html lang="en">
   <head>
@@ -30,9 +42,21 @@ const shell = (o: {
     <link rel="apple-touch-icon" href="${o.up}assets/apple-touch-icon.png?v=${REV}" />
     <link rel="stylesheet" href="${o.up}assets/fonts.css?v=${REV}" />
     <link rel="stylesheet" href="${o.up}styles.css?v=${REV}" />
+    <link rel="canonical" href="${abs(o.path)}" />
     <meta property="og:title" content="${esc(o.title)}" />
     <meta property="og:description" content="${esc(o.desc)}" />
     <meta property="og:type" content="website" />
+    <meta property="og:url" content="${abs(o.path)}" />
+    <meta property="og:site_name" content="${ORG.name}" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:image" content="${abs(OG_IMAGE.path)}" />
+    <meta property="og:image:width" content="${OG_IMAGE.w}" />
+    <meta property="og:image:height" content="${OG_IMAGE.h}" />
+    <meta property="og:image:alt" content="${esc(OG_IMAGE.alt)}" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content="${esc(o.title)}" />
+    <meta name="twitter:description" content="${esc(o.desc)}" />
+    <meta name="twitter:image" content="${abs(OG_IMAGE.path)}" />${o.head ?? ''}
   </head>
   <body${o.tier ? ` data-tier="${o.tier}"` : ''}>
     <a class="skip" href="#main">Skip to content</a>
@@ -103,8 +127,25 @@ const tierBlock = (tier: 'infra' | 'mind') => {
 
 export const indexPage = () => shell({
   up: './',
+  path: '/',
   title: `${ORG.name} — reliable tools, built in the open`,
   desc: 'A research organization working on computer vision, machine learning, and the systems underneath them. Everything we can open, we open.',
+  // Who this is, in the one format a search engine reads as a statement of
+  // identity rather than as prose it has to guess at. Only the front page
+  // carries it: an organization is one entity, and repeating the record on
+  // every page says nothing the first one did not.
+  head: `
+    <script type="application/ld+json">${JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'Organization',
+      name: ORG.name,
+      url: ORG.url,
+      logo: `${ORG.url}/assets/icon-512.png`,
+      image: `${ORG.url}${OG_IMAGE.path}`,
+      email: ORG.mail,
+      description: tidy(ORG.say),
+      sameAs: [ORG.github],
+    })}</script>`,
   body: `
     <header class="masthead">
       <div class="wrap row">
@@ -274,6 +315,7 @@ export const productPage = (p: Product) => {
 
   return shell({
     up: '../../',
+    path: `/products/${p.slug}/`,
     tier: p.tier,
     title: `${p.name} — ${p.tagline} · ${ORG.name}`,
     desc: p.desc,
@@ -346,8 +388,9 @@ ${right}
 // document it points at.
 export const manifestoPage = () => shell({
   up: '../',
+  path: '/manifesto/',
   title: `Manifesto — ${ORG.name}`,
-  desc: 'We view ethics not as an external layer of censorship filters, but as an engineering concept. The four foundations Lamantin AI builds on, and what radical openness commits us to.',
+  desc: 'Ethics as an engineering concept rather than a filter bolted on at the end — the four foundations Lamantin AI builds on, in full.',
   body: `
     <header class="masthead">
       <div class="wrap row">

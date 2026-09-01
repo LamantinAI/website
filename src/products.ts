@@ -155,6 +155,10 @@ export const ORG = {
                 than an exclusivity window. Work whose core has to stay closed
                 permanently is work for someone else.`,
   },
+  /** Where the site actually lives. Needed for the absolute URLs that
+   *  canonical tags, Open Graph and a sitemap all require — a relative path is
+   *  meaningless to a crawler that found the page somewhere else. */
+  url: 'https://lamantin-ai.com',
   mail: 'lamantin.research@gmail.com',
   github: 'https://github.com/LamantinAI',
   manifestoSource: 'https://github.com/LamantinAI/.github/blob/main/profile/README.md',
@@ -405,8 +409,8 @@ def start_worker(conn):
   {
     slug: 'mayak', name: 'mayak', tier: 'infra', stars: 5, lang: 'Python',
     note: 'a template, not a library',
-    tagline: 'a backend template for services coding agents maintain',
-    desc: 'A FastAPI backend template for services that are built and maintained by coding agents — one worked vertical to copy, and gates that fail on the mistakes this kind of codebase actually makes.',
+    tagline: 'a backend template for coding agents',
+    desc: 'A FastAPI backend template for services coding agents build and maintain: one worked vertical to copy, and gates that catch what such a codebase gets wrong.',
     lede: 'A FastAPI backend template for services that are built and maintained by coding agents.',
     card: 'A FastAPI backend template for services coding agents build and maintain — optimised for the hundredth change, not the first hour.',
     headline: 'Written for the hundredth change.',
@@ -447,7 +451,7 @@ def start_worker(conn):
     slug: 'fluxion', name: 'fluxion', tier: 'infra', stars: 0, lang: 'Rust',
     unreleased: true,
     tagline: 'a neuromorphic streaming SDK',
-    desc: 'A cross-hardware SDK for structured media AI — GStreamer plugins and an SDK foundation that keep one pipeline graph stable while runtimes and hardware change underneath.',
+    desc: 'A cross-hardware SDK for structured media AI: one pipeline graph that stays stable while runtimes and hardware change underneath.',
     lede: 'A cross-hardware SDK for making sense of media streams.',
     card: 'GStreamer plugins and an SDK for structured media AI — one pipeline graph, swappable runtimes and hardware underneath.',
     headline: 'One pipeline graph, swappable hardware underneath.',

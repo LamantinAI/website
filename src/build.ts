@@ -10,6 +10,7 @@ import { mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { PRODUCTS } from './products.ts'
+import { ORG } from './products.ts'
 import { indexPage, manifestoPage, productPage } from './render.ts'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
@@ -25,6 +26,25 @@ console.log('собираю:')
 write('index.html', indexPage())
 write('manifesto/index.html', manifestoPage())
 for (const p of PRODUCTS) write(`products/${p.slug}/index.html`, productPage(p))
+
+// A crawler is told what exists and where, by the same list that built it.
+// Written here rather than kept by hand for the reason the pages are: a
+// sitemap maintained separately is a sitemap that goes stale the first time
+// someone adds a product and forgets.
+const urls = ['/', '/manifesto/', ...PRODUCTS.map((p) => `/products/${p.slug}/`)]
+write('sitemap.xml', `<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+${urls.map((u) => `  <url><loc>${ORG.url}${u}</loc></url>`).join('\n')}
+</urlset>
+`)
+
+// Nothing here is private, so the file exists to point at the sitemap rather
+// than to keep anyone out.
+write('robots.txt', `User-agent: *
+Allow: /
+
+Sitemap: ${ORG.url}/sitemap.xml
+`)
 
 // A generator that only ever writes leaves orphans: drop a product from the
 // data and its page would stay live, linked from nothing and telling nobody
