@@ -12,15 +12,6 @@ import { MANIFESTO, ORG, PRODUCTS, TIERS, type Fact, type Product } from './prod
  *  markup this file emits, so an old copy running against new markup mangles it. */
 const REV = '7'
 
-/** `2026-09-01` → `1 September 2026`. The machine-readable form stays in
- *  `datetime`; a reader gets the one people write. */
-const humanDate = (iso: string) => {
-  const [y, m, d] = iso.split('-').map(Number)
-  const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
-    'August', 'September', 'October', 'November', 'December'][m - 1]
-  return `${d} ${month} ${y}`
-}
-
 const esc = (s: string) => s.replace(/&(?![a-z#]+;)/g, '&amp;').replace(/"/g, '&quot;')
 /** Collapses the indentation that keeps the data file readable. */
 const tidy = (s: string) => s.replace(/\s*\n\s*/g, ' ').trim()
@@ -84,8 +75,7 @@ ${o.body}
             <a href="${ORG.github}" rel="noopener">GitHub</a>
             <a href="${ORG.brandbook}" rel="noopener">Brand book</a>
           </div>
-          <small>${ORG.name} · Rust · Python · Edge AI</small>${o.updated ? `
-          <small class="updated">Updated <time datetime="${o.updated}">${humanDate(o.updated)}</time></small>` : ''}
+          <small>${ORG.name} · Rust · Python · Edge AI</small>
         </div>
       </div>
     </footer>
@@ -156,6 +146,10 @@ export const indexPage = (updated: string | null = null) => shell({
       email: ORG.mail,
       description: tidy(ORG.say),
       sameAs: [ORG.github],
+      // The page's freshness, stated once and only for machines. GitHub Pages
+      // already sends `Last-Modified` on every response, so a line of visible
+      // text would have been a third copy of the same fact — and it read as
+      // furniture in a footer that had no other metadata in it.
       ...(updated ? { dateModified: updated } : {}),
     })}</script>`,
   body: `
