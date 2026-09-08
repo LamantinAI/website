@@ -12,6 +12,15 @@ import { MANIFESTO, ORG, PRODUCTS, TIERS, type Fact, type Product } from './prod
  *  markup this file emits, so an old copy running against new markup mangles it. */
 const REV = '7'
 
+/** `2026-09-01` → `1 September 2026`. The machine-readable form stays in
+ *  `datetime`; a reader gets the one people write. */
+const humanDate = (iso: string) => {
+  const [y, m, d] = iso.split('-').map(Number)
+  const month = ['January', 'February', 'March', 'April', 'May', 'June', 'July',
+    'August', 'September', 'October', 'November', 'December'][m - 1]
+  return `${d} ${month} ${y}`
+}
+
 const esc = (s: string) => s.replace(/&(?![a-z#]+;)/g, '&amp;').replace(/"/g, '&quot;')
 /** Collapses the indentation that keeps the data file readable. */
 const tidy = (s: string) => s.replace(/\s*\n\s*/g, ' ').trim()
@@ -29,7 +38,7 @@ const OG_IMAGE = { path: '/assets/og.png', w: 1200, h: 630,
 
 const shell = (o: {
   up: string; path: string; title: string; desc: string; tier?: string; body: string
-  head?: string; scripts?: string
+  head?: string; scripts?: string; updated?: string | null
 }) => `<!doctype html>
 <html lang="en">
   <head>
@@ -75,7 +84,8 @@ ${o.body}
             <a href="${ORG.github}" rel="noopener">GitHub</a>
             <a href="${ORG.brandbook}" rel="noopener">Brand book</a>
           </div>
-          <small>${ORG.name} · Rust · Python · Edge AI</small>
+          <small>${ORG.name} · Rust · Python · Edge AI</small>${o.updated ? `
+          <small class="updated">Updated <time datetime="${o.updated}">${humanDate(o.updated)}</time></small>` : ''}
         </div>
       </div>
     </footer>
@@ -125,7 +135,8 @@ const tierBlock = (tier: 'infra' | 'mind') => {
           </div>`
 }
 
-export const indexPage = () => shell({
+export const indexPage = (updated: string | null = null) => shell({
+  updated,
   up: './',
   path: '/',
   title: `${ORG.name} — reliable tools, built in the open`,
@@ -145,6 +156,7 @@ export const indexPage = () => shell({
       email: ORG.mail,
       description: tidy(ORG.say),
       sameAs: [ORG.github],
+      ...(updated ? { dateModified: updated } : {}),
     })}</script>`,
   body: `
     <header class="masthead">
@@ -281,7 +293,7 @@ const codeWindow = (code: string, title?: string) => `          <div class="code
           </div>`
 
 // ── a product ─────────────────────────────────────────────────────────────
-export const productPage = (p: Product) => {
+export const productPage = (p: Product, updated: string | null = null) => {
   const t = TIERS[p.tier]
   const shots = !p.shots ? '' : `
       <div class="wrap">
@@ -314,6 +326,7 @@ export const productPage = (p: Product) => {
     : `          <ul class="facts">\n${facts(p.more.list ?? [])}\n          </ul>`
 
   return shell({
+    updated,
     up: '../../',
     path: `/products/${p.slug}/`,
     tier: p.tier,
@@ -386,7 +399,8 @@ ${right}
 // grid. The four foundations come from ORG.foundations — the same array the
 // index summarises — so the front page can never quietly disagree with the
 // document it points at.
-export const manifestoPage = () => shell({
+export const manifestoPage = (updated: string | null = null) => shell({
+  updated,
   up: '../',
   path: '/manifesto/',
   title: `Manifesto — ${ORG.name}`,

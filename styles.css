@@ -282,6 +282,9 @@ footer .links a:hover { color: var(--parchment); border-bottom-color: rgba(236, 
 footer .rule { margin-top: 34px; padding-top: 22px; border-top: 1px solid rgba(236, 232, 223, 0.14);
   display: flex; flex-wrap: wrap; gap: 8px 24px; align-items: baseline; }
 footer .rule small { font-family: var(--mono); font-size: 12px; color: #a49d90; letter-spacing: 0.04em; }
+/* the date sits beside the colophon, quieter than it — it is a signal for
+   machines first and a courtesy to readers second */
+footer .rule .updated { color: #8f8880; }
 footer :focus-visible { outline-color: var(--parchment); }
 
 @media (prefers-reduced-motion: reduce) {
