@@ -56,7 +56,23 @@ const shell = (o: {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(o.title)}" />
     <meta name="twitter:description" content="${esc(o.desc)}" />
-    <meta name="twitter:image" content="${abs(OG_IMAGE.path)}" />${o.head ?? ''}
+    <meta name="twitter:image" content="${abs(OG_IMAGE.path)}" />
+    <!-- The page itself, as a record. dateModified belongs on a CreativeWork
+         and a WebPage is one; an Organization is not, so a date parked on the
+         organization record sits outside its domain and gets dropped by
+         anything validating against the vocabulary. It also has to be per page
+         rather than once on the front: the product pages are the ones worth
+         citing, and a date on the index says nothing about them. -->
+    <script type="application/ld+json">${JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': abs(o.path),
+      url: abs(o.path),
+      name: o.title,
+      description: o.desc,
+      isPartOf: { '@type': 'WebSite', url: ORG.url, name: ORG.name },
+      ...(o.updated ? { dateModified: o.updated } : {}),
+    })}</script>${o.head ?? ''}
   </head>
   <body${o.tier ? ` data-tier="${o.tier}"` : ''}>
     <a class="skip" href="#main">Skip to content</a>
@@ -146,11 +162,6 @@ export const indexPage = (updated: string | null = null) => shell({
       email: ORG.mail,
       description: tidy(ORG.say),
       sameAs: [ORG.github],
-      // The page's freshness, stated once and only for machines. GitHub Pages
-      // already sends `Last-Modified` on every response, so a line of visible
-      // text would have been a third copy of the same fact — and it read as
-      // furniture in a footer that had no other metadata in it.
-      ...(updated ? { dateModified: updated } : {}),
     })}</script>`,
   body: `
     <header class="masthead">
