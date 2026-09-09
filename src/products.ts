@@ -211,14 +211,14 @@ export const PRODUCTS: Product[] = [
     card: 'Cognitive memory for LLM agents — local-first, and shareable across a team through the cloud.',
     headline: 'An agent that returns, recalls, and reshapes.',
     body: [
-      `Most agents forget everything between sessions. kaeru gives them a typed property
-       graph to think in: episodes and hypotheses while the work is live, settled outcomes
-       and references once it isn't. Open a project and the agent knows what was being
+      `Most agents forget everything between sessions. kaeru is the memory they keep
+       instead — a typed property graph to think in, holding episodes and hypotheses while
+       the work is live, settled outcomes and references once it isn't. Open a project and the agent knows what was being
        thought about, can follow the provenance of a decision, and can pull in what the
        rest of the team has shared.`,
       `The name is 蛙 — <i>kaeru</i>, "frog", a homophone of 帰る "to return" and 変える
        "to change".`,
-      `It is a facilitator, not an enforcer. The curator API offers around forty primitives
+      `It is a facilitator, not an enforcer. The curator API offers around seventy primitives
        as available tools; the agent and the person decide when to reach for them. The
        daemon hints, and never blocks.`,
     ],
@@ -243,8 +243,8 @@ export const PRODUCTS: Product[] = [
     extraAction: { label: 'Quick start →', href: 'https://github.com/LamantinAI/kaeru/blob/main/QUICK_START.md' },
     more: {
       headline: 'Talking to it.',
-      prose: `kaeru speaks the Model Context Protocol, so any MCP-capable agent picks up the
-              whole verb set. There is also a <code>rig</code> adapter for agents that embed
+      prose: `kaeru is an MCP server, so any agent that speaks the Model Context Protocol
+              picks up the whole verb set. There is also a <code>rig</code> adapter for agents that embed
               the store in-process.`,
       links: [
         { label: 'Architecture', href: 'https://github.com/LamantinAI/kaeru/blob/main/docs/architecture.md' },

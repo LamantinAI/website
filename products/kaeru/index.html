@@ -25,6 +25,13 @@
     <meta name="twitter:title" content="kaeru — cognitive memory for LLM agents · Lamantin AI" />
     <meta name="twitter:description" content="A typed, bi-temporal graph that agents think in — local-first for each agent, with an optional shared cloud tier for a team." />
     <meta name="twitter:image" content="https://lamantin-ai.com/assets/og.png" />
+    <!-- The page itself, as a record. dateModified belongs on a CreativeWork
+         and a WebPage is one; an Organization is not, so a date parked on the
+         organization record sits outside its domain and gets dropped by
+         anything validating against the vocabulary. It also has to be per page
+         rather than once on the front: the product pages are the ones worth
+         citing, and a date on the index says nothing about them. -->
+    <script type="application/ld+json">{"@context":"https://schema.org","@type":"WebPage","@id":"https://lamantin-ai.com/products/kaeru/","url":"https://lamantin-ai.com/products/kaeru/","name":"kaeru — cognitive memory for LLM agents · Lamantin AI","description":"A typed, bi-temporal graph that agents think in — local-first for each agent, with an optional shared cloud tier for a team.","isPartOf":{"@type":"WebSite","url":"https://lamantin-ai.com","name":"Lamantin AI"},"dateModified":"2026-09-09"}</script>
   </head>
   <body data-tier="infra">
     <a class="skip" href="#main">Skip to content</a>
@@ -100,9 +107,9 @@
         <div class="wrap p-body">
           <div class="prose">
             <h2>An agent that returns, recalls, and reshapes.</h2>
-            <p>Most agents forget everything between sessions. kaeru gives them a typed property graph to think in: episodes and hypotheses while the work is live, settled outcomes and references once it isn't. Open a project and the agent knows what was being thought about, can follow the provenance of a decision, and can pull in what the rest of the team has shared.</p>
+            <p>Most agents forget everything between sessions. kaeru is the memory they keep instead — a typed property graph to think in, holding episodes and hypotheses while the work is live, settled outcomes and references once it isn't. Open a project and the agent knows what was being thought about, can follow the provenance of a decision, and can pull in what the rest of the team has shared.</p>
             <p>The name is 蛙 — <i>kaeru</i>, "frog", a homophone of 帰る "to return" and 変える "to change".</p>
-            <p>It is a facilitator, not an enforcer. The curator API offers around forty primitives as available tools; the agent and the person decide when to reach for them. The daemon hints, and never blocks.</p>
+            <p>It is a facilitator, not an enforcer. The curator API offers around seventy primitives as available tools; the agent and the person decide when to reach for them. The daemon hints, and never blocks.</p>
           </div>
           <ul class="facts">
             <li>
@@ -133,7 +140,7 @@
         <div class="wrap p-body">
           <div class="prose">
             <h2>Talking to it.</h2>
-            <p>kaeru speaks the Model Context Protocol, so any MCP-capable agent picks up the whole verb set. There is also a <code>rig</code> adapter for agents that embed the store in-process.</p>
+            <p>kaeru is an MCP server, so any agent that speaks the Model Context Protocol picks up the whole verb set. There is also a <code>rig</code> adapter for agents that embed the store in-process.</p>
             <div class="also">
               <a href="https://github.com/LamantinAI/kaeru/blob/main/docs/architecture.md" rel="noopener">Architecture</a>
               <a href="https://github.com/LamantinAI/kaeru/blob/main/docs/curator-api.md" rel="noopener">Curator API</a>

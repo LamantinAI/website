@@ -6,6 +6,7 @@
 // something you can open with a file server or point GitHub Pages at, and a
 // build is only needed when the content changes.
 
+import { execFileSync } from 'node:child_process'
 import { mkdirSync, readdirSync, rmSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -15,6 +16,47 @@ import { indexPage, manifestoPage, productPage } from './render.ts'
 
 const root = join(dirname(fileURLToPath(import.meta.url)), '..')
 
+/** When the site's content last actually changed.
+ *
+ *  Taken from git rather than the clock, because a build date says when the
+ *  generator ran and this needs to say when the words changed — rebuilding an
+ *  untouched site must not make it look freshly written.
+ *
+ *  But git alone answers with the *previous* content commit: a build runs
+ *  before the commit that carries its own changes, so a page edited today and
+ *  committed today would ship claiming yesterday. So a dirty content tree
+ *  means the change is happening now, and now is the honest answer. Clean tree
+ *  and the commit date stands, which is what keeps an untouched rebuild quiet.
+ *
+ *  One date for every page, and that is honest rather than lazy: the whole site
+ *  is generated from one content file, so a per-page date would be a precision
+ *  the generator does not have.
+ *
+ *  It matters because a page with no date carries no recency signal in the
+ *  document at all, and AI answers weigh recency heavily — pages left stale
+ *  stop being cited. */
+const lastChanged = (() => {
+  const CONTENT = ['src/', 'styles.css']
+  const git = (...args: string[]) =>
+    execFileSync('git', args, { cwd: root, encoding: 'utf8' }).trim()
+  /** Local, to match git's `%cI` — `toISOString` is UTC and would disagree
+   *  with it either side of midnight. */
+  const today = () => {
+    const d = new Date()
+    const pad = (n: number) => String(n).padStart(2, '0')
+    return `${d.getFullYear()}-${pad(d.getMonth() + 1)}-${pad(d.getDate())}`
+  }
+  try {
+    if (git('status', '--porcelain', '--', ...CONTENT)) return today()
+    const iso = git('log', '-1', '--format=%cI', '--', ...CONTENT)
+    if (iso) return iso.slice(0, 10)
+  } catch {
+    // A tarball with no git history still has to build. Saying nothing is
+    // right here — a made-up date would be worse than an absent one.
+  }
+  return null
+})()
+
 const write = (rel: string, html: string) => {
   const path = join(root, rel)
   mkdirSync(dirname(path), { recursive: true })
@@ -23,9 +65,9 @@ const write = (rel: string, html: string) => {
 }
 
 console.log('собираю:')
-write('index.html', indexPage())
-write('manifesto/index.html', manifestoPage())
-for (const p of PRODUCTS) write(`products/${p.slug}/index.html`, productPage(p))
+write('index.html', indexPage(lastChanged))
+write('manifesto/index.html', manifestoPage(lastChanged))
+for (const p of PRODUCTS) write(`products/${p.slug}/index.html`, productPage(p, lastChanged))
 
 // A crawler is told what exists and where, by the same list that built it.
 // Written here rather than kept by hand for the reason the pages are: a

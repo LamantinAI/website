@@ -29,7 +29,7 @@ const OG_IMAGE = { path: '/assets/og.png', w: 1200, h: 630,
 
 const shell = (o: {
   up: string; path: string; title: string; desc: string; tier?: string; body: string
-  head?: string; scripts?: string
+  head?: string; scripts?: string; updated?: string | null
 }) => `<!doctype html>
 <html lang="en">
   <head>
@@ -56,7 +56,23 @@ const shell = (o: {
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content="${esc(o.title)}" />
     <meta name="twitter:description" content="${esc(o.desc)}" />
-    <meta name="twitter:image" content="${abs(OG_IMAGE.path)}" />${o.head ?? ''}
+    <meta name="twitter:image" content="${abs(OG_IMAGE.path)}" />
+    <!-- The page itself, as a record. dateModified belongs on a CreativeWork
+         and a WebPage is one; an Organization is not, so a date parked on the
+         organization record sits outside its domain and gets dropped by
+         anything validating against the vocabulary. It also has to be per page
+         rather than once on the front: the product pages are the ones worth
+         citing, and a date on the index says nothing about them. -->
+    <script type="application/ld+json">${JSON.stringify({
+      '@context': 'https://schema.org',
+      '@type': 'WebPage',
+      '@id': abs(o.path),
+      url: abs(o.path),
+      name: o.title,
+      description: o.desc,
+      isPartOf: { '@type': 'WebSite', url: ORG.url, name: ORG.name },
+      ...(o.updated ? { dateModified: o.updated } : {}),
+    })}</script>${o.head ?? ''}
   </head>
   <body${o.tier ? ` data-tier="${o.tier}"` : ''}>
     <a class="skip" href="#main">Skip to content</a>
@@ -125,7 +141,8 @@ const tierBlock = (tier: 'infra' | 'mind') => {
           </div>`
 }
 
-export const indexPage = () => shell({
+export const indexPage = (updated: string | null = null) => shell({
+  updated,
   up: './',
   path: '/',
   title: `${ORG.name} — reliable tools, built in the open`,
@@ -281,7 +298,7 @@ const codeWindow = (code: string, title?: string) => `          <div class="code
           </div>`
 
 // ── a product ─────────────────────────────────────────────────────────────
-export const productPage = (p: Product) => {
+export const productPage = (p: Product, updated: string | null = null) => {
   const t = TIERS[p.tier]
   const shots = !p.shots ? '' : `
       <div class="wrap">
@@ -314,6 +331,7 @@ export const productPage = (p: Product) => {
     : `          <ul class="facts">\n${facts(p.more.list ?? [])}\n          </ul>`
 
   return shell({
+    updated,
     up: '../../',
     path: `/products/${p.slug}/`,
     tier: p.tier,
@@ -386,7 +404,8 @@ ${right}
 // grid. The four foundations come from ORG.foundations — the same array the
 // index summarises — so the front page can never quietly disagree with the
 // document it points at.
-export const manifestoPage = () => shell({
+export const manifestoPage = (updated: string | null = null) => shell({
+  updated,
   up: '../',
   path: '/manifesto/',
   title: `Manifesto — ${ORG.name}`,
